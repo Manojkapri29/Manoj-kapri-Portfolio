@@ -24,21 +24,21 @@
   color-scheme: light;
 }
 
-/* Dark: the same world at dusk. */
+/* Dark (default): premium near-black stage, cool platinum-blue accent. */
 .dark {
-  --bg: #13122e;
-  --surface: rgba(24, 23, 58, 0.8);
-  --surface-2: rgba(36, 34, 80, 0.8);
-  --line: rgba(190, 188, 255, 0.14);
-  --line-strong: rgba(190, 188, 255, 0.26);
-  --grid: rgba(190, 188, 255, 0.04);
-  --ink: #eceaff;
-  --muted: #b3b1dc;
-  --accent: #6d64f5;
-  --accent-ink: #aaa4ff;
-  --accent-soft: rgba(130, 122, 255, 0.18);
-  --teal: #c4a8ff;
-  --focus: #aaa4ff;
+  --bg: #05060a;
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  --grid: rgba(255, 255, 255, 0.03);
+  --ink: #f2f3f7;
+  --muted: #9ba0b3;
+  --accent: #5b74ff;
+  --accent-ink: #9fb2ff;
+  --accent-soft: rgba(124, 157, 255, 0.14);
+  --teal: #b9a6ff;
+  --focus: #9fb2ff;
   color-scheme: dark;
 }
 
@@ -159,4 +159,3 @@ body {
   50% { transform: translate(8px, -18px); }
 }
 .dream-dusk { background: transparent; transition: background 0.4s; }
-.dark .dream-dusk { background: linear-gradient(180deg, rgba(14, 12, 40, 0.78), rgba(24, 20, 70, 0.7)); }

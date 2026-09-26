@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Briefcase, Building2, FolderKanban, GraduationCap, LayoutList, Mail, Moon, Search, Sun, User, Wrench } from 'lucide-react';
-import { intro, profile, sections, site, type SectionId } from '../data/content';
+import { BookOpen, Briefcase, Building2, FolderKanban, GraduationCap, LayoutList, Mail, Moon, Search, Sun, User, Wrench } from 'lucide-react';
+import { profile, sections, site, type SectionId } from '../data/content';
 import { scrollToSection, useReducedMotion } from '../hooks/useSite';
 import { SheetMark } from './icons';
 
 const tabIcons: Record<SectionId, typeof User> = {
   about: User,
+  story: BookOpen,
   skills: Wrench,
   experience: Briefcase,
   projects: FolderKanban,
@@ -45,13 +46,6 @@ type TopBarProps = {
 export function TopBar({ active, theme, onToggleTheme, onOpenPalette, view, onToggleView }: TopBarProps) {
   const current = sections.find((s) => s.id === active) ?? sections[0];
   const typed = useTypedFormula();
-  const [chapter, setChapter] = useState(0);
-  useEffect(() => {
-    const on = (e: Event) => setChapter((e as CustomEvent<number>).detail);
-    window.addEventListener('introchapter', on);
-    return () => window.removeEventListener('introchapter', on);
-  }, []);
-  const inStory = active === 'about' && chapter > 0;
   const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 
   return (
@@ -101,13 +95,11 @@ export function TopBar({ active, theme, onToggleTheme, onOpenPalette, view, onTo
       <div className="border-t border-line bg-surface/60" aria-hidden="true">
         <div className="mx-auto flex h-9 max-w-6xl items-stretch px-4 font-mono text-[12.5px]">
           <div className="flex w-14 shrink-0 items-center justify-center border-r border-line font-semibold text-ink">
-            {inStory ? intro[chapter].cell : current.cell}
+            {current.cell}
           </div>
           <div className="flex w-10 shrink-0 items-center justify-center border-r border-line italic text-accent-ink">fx</div>
           <div className="flex min-w-0 items-center truncate px-3 text-ink">
-            {inStory ? (
-              <span className="truncate"><span className="text-accent-ink">=STORY</span><span className="text-muted">(</span>"{intro[chapter].kicker}"<span className="text-muted">)</span></span>
-            ) : active === 'about' ? (
+            {active === 'about' ? (
               <span className={typed.done ? '' : 'caret'}>{typed.text}</span>
             ) : (
               <span>

@@ -18,10 +18,10 @@ export const useReducedMotion = () => useMediaQuery('(prefers-reduced-motion: re
 
 type Theme = 'dark' | 'light';
 
-/** Light by default; choice saved in localStorage. */
+/** Dark (premium) by default; choice saved in localStorage. */
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() =>
-    document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+    document.documentElement.classList.contains('light') ? 'light' : 'dark',
   );
 
   useEffect(() => {
@@ -63,22 +63,12 @@ export function useActiveSection() {
   return active;
 }
 
-/** WebGL available and motion allowed? */
-export function canUseWebGL() {
-  if (typeof window === 'undefined') return false;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  try {
-    const c = document.createElement('canvas');
-    return !!(c.getContext('webgl2') || c.getContext('webgl'));
-  } catch {
-    return false;
-  }
-}
-
 export function scrollToSection(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  const lenis = (window as Window & { __lenis?: { scrollTo: (t: HTMLElement, o?: object) => void } }).__lenis;
+  if (lenis) lenis.scrollTo(el, { offset: -90 });
+  else el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   history.replaceState(null, '', `#${id}`);
   // Move focus for keyboard / screen-reader users without scrolling again.
   const heading = el.querySelector<HTMLElement>('h1, h2');

@@ -37,6 +37,7 @@ export const profile = {
 /** Sheet sections: id, Name Box cell, fx formula, tab label. Order = page order. */
 export const sections = [
   { id: 'about', cell: 'A1', formula: '=ABOUT()', label: 'About' },
+  { id: 'story', cell: 'A2', formula: '=STORY()', label: 'Story' },
   { id: 'skills', cell: 'B2', formula: '=SKILLS()', label: 'Skills' },
   { id: 'experience', cell: 'C2', formula: '=EXPERIENCE()', label: 'Experience' },
   { id: 'projects', cell: 'D2', formula: '=PROJECTS()', label: 'Projects' },
@@ -273,68 +274,55 @@ export const contact = {
 export const isPlaceholder = (v: string) => /\{\{.*\}\}/.test(v);
 
 /**
- * PERSONAL INTRODUCTION — told as a comic: "The Data Innings".
- * `body` is Manoj's own introduction, word for word. Cricket headings and
- * scenes are just the storytelling layer — edit freely.
- * `scene` picks the artwork: cover | stadium | scoreboard | wagonwheel | grounds | decision | nets | finale
+ * CINEMATIC HERO (cricket-bat film) — four short text beats over the film.
+ * beat2.body is Manoj's own opening line of his introduction.
  */
-export const intro = [
-  {
-    cell: 'A1',
-    scene: 'cover',
-    kicker: 'Issue #1 · Delhi NCR',
-    title: 'The Data Innings',
-    bubble: "Hi, I'm Manoj Kapri.",
+export const hero = {
+  eyebrow: 'Data Analyst · MIS Executive · Delhi NCR',
+  beat2: {
+    eyebrow: 'From the crease to the dashboard',
+    title: 'I read the game in numbers.',
     body: "I have close to three years of experience across MIS reporting and data analysis, and I'm someone who genuinely enjoys working with data — whether it's cleaning it, analyzing it, or turning it into insights that drive real decisions.",
   },
-  {
-    cell: 'A2',
-    scene: 'stadium',
-    kicker: 'The prologue',
-    title: 'Before the spreadsheets…',
-    // Manoj's cricket background — add detail here (team, level, years) if you like.
-    body: 'Before the spreadsheets, I was a professional cricketer.',
+  beat3: {
+    eyebrow: 'The kit',
+    title: 'Every innings is data.',
+    tags: ['SQL', 'Advanced Excel', 'Power BI', 'Python', 'MIS Reporting', 'Dashboards'],
   },
-  {
-    cell: 'A3',
-    scene: 'scoreboard',
-    kicker: 'Innings 1 · M3M India · MIS Executive',
-    title: 'Opening the batting',
-    body: 'I started my career at M3M India as an MIS Executive, where I spent about two and a half years in the real estate sector managing large-scale reporting and dashboards.',
+  beat4: {
+    eyebrow: 'Next match',
+    title: "Let's play the next innings together.",
   },
-  {
-    cell: 'A4',
-    scene: 'wagonwheel',
-    kicker: 'Innings 2 · AECOM India · Data Analyst',
-    title: 'New ground',
-    body: 'From there, I moved to AECOM India as a Data Analyst, which strengthened my core analytical and reporting skills.',
-  },
-  {
-    cell: 'A5',
-    scene: 'grounds',
-    kicker: 'Innings 3 · The LaLiT Suri Hospitality Group',
-    title: '12 grounds, one scorecard',
-    body: 'Most recently, I worked as an MIS Executive at The Bharat Hotels Limited (The LaLiT Suri Hospitality Group), handling dashboards and reporting across 12+ properties pan-India within a Corporate L&D and MIS function.',
-  },
-  {
-    cell: 'A6',
-    scene: 'decision',
-    kicker: 'The review',
-    title: 'Choosing my format',
-    body: "I moved on from that role because I wanted to focus more deeply on hands-on data analysis rather than L&D-related reporting, and I'm now looking to build a career fully centered around data.",
-  },
-  {
-    cell: 'A7',
-    scene: 'nets',
-    kicker: 'Nets practice · Digicrome · Manipal University Jaipur',
-    title: 'Practice makes the player',
-    body: 'Alongside my work experience, I did an online Data Science internship with Digicrome, which gave me practical exposure to Python, EDA, and machine learning. I also completed my MBA in Data Science and Analytics from Manipal University Jaipur with an 8.27 CGPA, which strengthened my foundation in Advanced Excel, Python, SQL, and Power BI.',
-  },
-  {
-    cell: 'A8',
-    scene: 'finale',
-    kicker: 'What I bring',
-    title: 'Ready for the next match',
-    body: "What I bring is a mix of real business reporting experience and formal data science training, along with a genuine interest in solving problems through data — and I'm looking forward to applying that here.",
-  },
-] as const;
+};
+
+/**
+ * MY STORY — Manoj's personal introduction, word for word, in one compact section.
+ */
+export const story = {
+  title: 'The story so far',
+  career: [
+    {
+      n: '01',
+      org: 'M3M India',
+      role: 'MIS Executive',
+      text: 'I started my career at M3M India as an MIS Executive, where I spent about two and a half years in the real estate sector managing large-scale reporting and dashboards.',
+    },
+    {
+      n: '02',
+      org: 'AECOM India',
+      role: 'Data Analyst',
+      text: 'From there, I moved to AECOM India as a Data Analyst, which strengthened my core analytical and reporting skills.',
+    },
+    {
+      n: '03',
+      org: 'The LaLiT Suri Hospitality Group',
+      role: 'MIS Executive',
+      text: 'Most recently, I worked as an MIS Executive at The Bharat Hotels Limited (The LaLiT Suri Hospitality Group), handling dashboards and reporting across 12+ properties pan-India within a Corporate L&D and MIS function.',
+    },
+  ],
+  why: "I moved on from that role because I wanted to focus more deeply on hands-on data analysis rather than L&D-related reporting, and I'm now looking to build a career fully centered around data.",
+  learning:
+    'Alongside my work experience, I did an online Data Science internship with Digicrome, which gave me practical exposure to Python, EDA, and machine learning. I also completed my MBA in Data Science and Analytics from Manipal University Jaipur with an 8.27 CGPA, which strengthened my foundation in Advanced Excel, Python, SQL, and Power BI.',
+  bring:
+    "What I bring is a mix of real business reporting experience and formal data science training, along with a genuine interest in solving problems through data — and I'm looking forward to applying that here.",
+};
