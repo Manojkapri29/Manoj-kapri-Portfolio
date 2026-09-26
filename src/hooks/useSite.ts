@@ -63,6 +63,18 @@ export function useActiveSection() {
   return active;
 }
 
+/** WebGL available and motion allowed? */
+export function canUseWebGL() {
+  if (typeof window === 'undefined') return false;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  try {
+    const c = document.createElement('canvas');
+    return !!(c.getContext('webgl2') || c.getContext('webgl'));
+  } catch {
+    return false;
+  }
+}
+
 export function scrollToSection(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
