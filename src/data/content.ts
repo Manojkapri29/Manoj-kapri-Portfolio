@@ -51,7 +51,7 @@ export type SectionId = (typeof sections)[number]['id'];
 export const ranges = {
   skills: 'B2:B5',
   experience: 'C2:C18',
-  projects: 'D2:D3',
+  projects: 'D2:D5',
   education: 'E2:E6',
 };
 
@@ -193,6 +193,8 @@ export type Project = {
   description: string;
   tools: string[];
   metrics: { label: string; value: string }[];
+  /** Show the illustrative Actual-vs-Forecast chart (labelled "Sample data"). */
+  chart?: boolean;
   github: string;
   demo: string;
 };
@@ -203,12 +205,14 @@ export const projects: Project[] = [
     tags: ['Forecasting', 'Python'],
     description: 'Analyzed store sales data and built a model in Python to forecast future sales.',
     tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Scikit-learn'],
+    // Figures from the project notebook (Nexthikes-Project-6)
     metrics: [
-      { label: 'Stores analyzed', value: '{{ADD_METRIC: number of stores}}' },
-      { label: 'Forecast error', value: '{{ADD_METRIC: MAPE / RMSE}}' },
-      { label: 'Forecast horizon', value: '{{ADD_METRIC: weeks ahead}}' },
+      { label: 'Stores analyzed', value: '1,115' },
+      { label: 'Daily sales records', value: '1,017,209' },
+      { label: 'Records after cleaning', value: '715,912' },
     ],
-    github: '{{GITHUB_URL_PROJECT_1}}',
+    chart: true,
+    github: 'https://github.com/Manojkapri29/Nexthikes-Project-6',
     demo: '{{DEMO_URL_PROJECT_1}}',
   },
   {
@@ -221,8 +225,33 @@ export const projects: Project[] = [
       { label: 'Forecast error', value: '{{ADD_METRIC: MAPE / RMSE}}' },
       { label: 'Data period', value: '{{ADD_METRIC: months of history}}' },
     ],
+    chart: true,
     github: '{{GITHUB_URL_PROJECT_2}}',
     demo: '{{DEMO_URL_PROJECT_2}}',
+  },
+  {
+    name: 'Customer Review Sentiment Analysis',
+    tags: ['NLP', 'Python'],
+    description:
+      'Digicrome capstone: cleaned and explored product reviews and built a model in Python to predict sentiment. Positive reviews tend to be short and simple; negative ones longer and more detailed.',
+    tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'NLTK / VADER', 'Scikit-learn'],
+    // Row counts of the datasets in the repo
+    metrics: [
+      { label: 'Labelled training reviews', value: '4,000' },
+      { label: 'Test reviews', value: '1,000' },
+    ],
+    github: 'https://github.com/Manojkapri29/Digicrome-Final-Capstone-Project',
+    demo: '{{DEMO_URL_PROJECT_3}}',
+  },
+  {
+    name: 'Job Market Analysis & Recommendation System',
+    tags: ['Analytics', 'Recommender'],
+    description:
+      'NextHikes project analysing job-market trends — salaries, emerging roles and remote work — with a Flask app that recommends jobs using TF-IDF and cosine similarity.',
+    tools: ['Python', 'Pandas', 'NumPy', 'Scikit-learn', 'Flask', 'Docker'],
+    metrics: [],
+    github: 'https://github.com/Manojkapri29/Upwork-Nexthikes-Project-8',
+    demo: '{{DEMO_URL_PROJECT_4}}',
   },
   // ── Template: copy this block to add a project ─────────────────────────────
   // {
@@ -235,8 +264,8 @@ export const projects: Project[] = [
   //     { label: 'Metric 2', value: '{{ADD_METRIC: ...}}' },
   //     { label: 'Metric 3', value: '{{ADD_METRIC: ...}}' },
   //   ],
-  //   github: '{{GITHUB_URL_PROJECT_3}}',
-  //   demo: '{{DEMO_URL_PROJECT_3}}',
+  //   github: '{{GITHUB_URL_PROJECT_5}}',
+  //   demo: '{{DEMO_URL_PROJECT_5}}',
   // },
 ];
 

@@ -97,6 +97,8 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
     { href: project.github, label: 'GitHub', icon: <GithubIcon /> },
     { href: project.demo, label: 'Live Demo', icon: <ExternalLink className="size-4" aria-hidden="true" /> },
   ].filter((l) => !isPlaceholder(l.href));
+  // Only show real, filled-in numbers — unfilled {{ADD_METRIC}} placeholders stay hidden.
+  const filled = project.metrics.filter((m) => !isPlaceholder(m.value));
 
   return (
     <motion.div
@@ -142,8 +144,9 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
             <p className="mt-2 text-ink/85">{project.description}</p>
           </div>
 
-          <ul className="grid gap-3 sm:grid-cols-3">
-            {project.metrics.map((m, i) => (
+          {filled.length > 0 && (
+          <ul className={`grid gap-3 ${filled.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
+            {filled.map((m, i) => (
               <li key={m.label} className="relative rounded-md border border-line bg-surface p-4">
                 <span className="absolute right-2 top-1.5 text-[10px] text-muted" aria-hidden="true">{String.fromCharCode(65 + i)}1</span>
                 <p className="text-[12px] text-muted">{m.label}</p>
@@ -151,7 +154,9 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
               </li>
             ))}
           </ul>
+          )}
 
+          {project.chart && (
           <div className="rounded-md border border-line bg-surface p-4">
             <div className="mb-2 flex items-center justify-between">
               <p className="text-sm font-semibold text-ink">Actual vs Forecast</p>
@@ -161,6 +166,7 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
               <ForecastChart seed={seed} />
             </Suspense>
           </div>
+          )}
 
           <div>
             <p className="mb-2 text-[11px] tracking-wider text-muted">TOOLS USED</p>
