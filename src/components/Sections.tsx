@@ -251,7 +251,7 @@ export function Experience() {
         <span className="absolute bottom-2 left-[11px] top-2 w-px bg-line md:left-[19px]" aria-hidden="true" />
         <motion.span
           style={{ scaleY }}
-          className="absolute bottom-2 left-[11px] top-2 w-px origin-top bg-accent md:left-[19px]"
+          className="absolute bottom-2 left-[10px] top-2 w-[3px] origin-top rounded-full bg-accent-ink shadow-[0_0_8px_var(--accent-ink)] md:left-[18px]"
           aria-hidden="true"
         />
         {experience.map((job, i) => (
