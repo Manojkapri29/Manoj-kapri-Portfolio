@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Building2, Copy, CornerDownLeft, FileDown, Moon, Search } from 'lucide-react';
 import { profile, sections } from '../data/content';
-import { scrollToSection, useMediaQuery, useReducedMotion } from '../hooks/useSite';
+import { scrollToSection } from '../hooks/useSite';
 import { GithubIcon, LinkedinIcon } from './icons';
 import { copyText, useToast } from './Toast';
 
@@ -130,39 +130,5 @@ export function CommandPalette({ open, onClose, onToggleTheme, onToggleView }: {
         </motion.div>
       )}
     </AnimatePresence>
-  );
-}
-
-/** Desktop-only soft green cell highlight that snaps to the 32px background grid. */
-export function CellCursor() {
-  const enabled = useMediaQuery('(hover: hover) and (pointer: fine) and (min-width: 1024px)');
-  const reduced = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!enabled || reduced) return;
-    const el = ref.current!;
-    const onMove = (e: PointerEvent) => {
-      const x = Math.floor(e.clientX / 32) * 32;
-      const y = Math.floor(e.clientY / 32) * 32;
-      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      el.style.opacity = '1';
-    };
-    const onLeave = () => { el.style.opacity = '0'; };
-    window.addEventListener('pointermove', onMove, { passive: true });
-    document.documentElement.addEventListener('pointerleave', onLeave);
-    return () => {
-      window.removeEventListener('pointermove', onMove);
-      document.documentElement.removeEventListener('pointerleave', onLeave);
-    };
-  }, [enabled, reduced]);
-
-  if (!enabled || reduced) return null;
-  return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 -z-10 size-[33px] border border-accent/50 bg-accent/10 opacity-0 transition-[transform,opacity] duration-100 ease-out"
-    />
   );
 }

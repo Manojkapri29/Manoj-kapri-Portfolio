@@ -33,12 +33,12 @@ function TiltCard({ project, index, onOpen }: { project: Project; index: number;
       }}
       onPointerLeave={() => { mx.set(0.5); my.set(0.5); }}
       style={tilt ? { rotateX: rx, rotateY: ry, transformPerspective: 900 } : undefined}
-      className="group relative flex h-full w-full cursor-pointer flex-col rounded-md border border-line bg-surface p-6 text-left transition-colors hover:border-accent has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-offset-2 has-[button:focus-visible]:outline-[var(--focus)]"
+      className="group relative flex h-full w-full cursor-pointer flex-col rounded-2xl border border-line bg-surface p-6 text-left transition-colors hover:border-accent has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-offset-2 has-[button:focus-visible]:outline-[var(--focus)]"
     >
-      <span className="absolute right-3 top-2 font-mono text-[10px] text-muted" aria-hidden="true">D{index + 2}</span>
+      <span className="absolute right-3 top-2 text-[10px] text-muted" aria-hidden="true">D{index + 2}</span>
       <div className="flex flex-wrap gap-1.5">
         {project.tags.map((t) => (
-          <span key={t} className="rounded bg-accent-soft px-2 py-0.5 font-mono text-[11px] text-accent-ink">{t}</span>
+          <span key={t} className="rounded bg-accent-soft px-2 py-0.5 text-[11px] text-accent-ink">{t}</span>
         ))}
       </div>
       <h3 className="mt-4 text-lg font-bold text-ink">
@@ -55,10 +55,10 @@ function TiltCard({ project, index, onOpen }: { project: Project; index: number;
       <p className="mt-2 flex-1 text-[14.5px] text-ink/85">{project.description}</p>
       <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tools used">
         {project.tools.map((t) => (
-          <li key={t} className="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-muted">{t}</li>
+          <li key={t} className="rounded border border-line px-2 py-0.5 text-[11px] text-muted">{t}</li>
         ))}
       </ul>
-      <span className="mt-5 inline-flex items-center gap-1.5 font-mono text-[12px] text-accent-ink" aria-hidden="true">
+      <span className="mt-5 inline-flex items-center gap-1.5 text-[12px] text-accent-ink" aria-hidden="true">
         Open dashboard view <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
       </span>
     </motion.article>
@@ -119,7 +119,7 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
       >
         {/* Title bar like a workbook window */}
         <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-line bg-surface px-5 py-3">
-          <span className="font-mono text-[12px] text-muted">Dashboard.xlsx</span>
+          <span className="text-[12px] text-muted">Dashboard.xlsx</span>
           <button
             ref={closeRef}
             type="button"
@@ -135,7 +135,7 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
           <div>
             <div className="flex flex-wrap gap-1.5">
               {project.tags.map((t) => (
-                <span key={t} className="rounded bg-accent-soft px-2 py-0.5 font-mono text-[11px] text-accent-ink">{t}</span>
+                <span key={t} className="rounded bg-accent-soft px-2 py-0.5 text-[11px] text-accent-ink">{t}</span>
               ))}
             </div>
             <h3 id="project-modal-title" className="mt-3 text-2xl font-bold text-ink">{project.name}</h3>
@@ -145,9 +145,9 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
           <ul className="grid gap-3 sm:grid-cols-3">
             {project.metrics.map((m, i) => (
               <li key={m.label} className="relative rounded-md border border-line bg-surface p-4">
-                <span className="absolute right-2 top-1.5 font-mono text-[10px] text-muted" aria-hidden="true">{String.fromCharCode(65 + i)}1</span>
+                <span className="absolute right-2 top-1.5 text-[10px] text-muted" aria-hidden="true">{String.fromCharCode(65 + i)}1</span>
                 <p className="text-[12px] text-muted">{m.label}</p>
-                <p className="mt-1 font-mono text-lg font-bold text-accent-ink"><Val v={m.value} /></p>
+                <p className="mt-1 text-lg font-bold text-accent-ink"><Val v={m.value} /></p>
               </li>
             ))}
           </ul>
@@ -155,7 +155,7 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
           <div className="rounded-md border border-line bg-surface p-4">
             <div className="mb-2 flex items-center justify-between">
               <p className="text-sm font-semibold text-ink">Actual vs Forecast</p>
-              <span className="rounded border border-line px-1.5 py-0.5 font-mono text-[10.5px] uppercase tracking-wider text-muted">Sample data</span>
+              <span className="rounded border border-line px-1.5 py-0.5 text-[10.5px] uppercase tracking-wider text-muted">Sample data</span>
             </div>
             <Suspense fallback={<div className="h-56 animate-pulse rounded bg-surface-2" />}>
               <ForecastChart seed={seed} />
@@ -163,7 +163,7 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
           </div>
 
           <div>
-            <p className="mb-2 font-mono text-[11px] tracking-wider text-muted">TOOLS USED</p>
+            <p className="mb-2 text-[11px] tracking-wider text-muted">TOOLS USED</p>
             <ul className="flex flex-wrap gap-2">
               {project.tools.map((t) => (
                 <li key={t} className="rounded border border-line bg-surface-2 px-3 py-1 text-sm text-ink">{t}</li>

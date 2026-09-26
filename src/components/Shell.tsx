@@ -165,8 +165,8 @@ export function SheetTabs({ active }: { active: SectionId }) {
 export function SectionLabel({ id, title, range }: { id: string; title: string; range: string }) {
   return (
     <div className="mb-8 flex items-baseline gap-3">
-      <span className="font-mono text-sm italic text-accent-ink" aria-hidden="true">ƒ</span>
-      <h2 id={`${id}-heading`} className="font-mono text-sm font-bold tracking-[0.14em] text-ink outline-none">
+      
+      <h2 id={`${id}-heading`} className="text-[13px] font-semibold uppercase tracking-[0.28em] text-ink outline-none">
         {title}
       </h2>
       <span className="font-mono text-xs text-muted" aria-label={`cell range ${range}`}>{range}</span>

@@ -18,10 +18,10 @@ export const useReducedMotion = () => useMediaQuery('(prefers-reduced-motion: re
 
 type Theme = 'dark' | 'light';
 
-/** Dark by default; choice saved in localStorage. */
+/** Light by default; choice saved in localStorage. */
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() =>
-    document.documentElement.classList.contains('light') ? 'light' : 'dark',
+    document.documentElement.classList.contains('dark') ? 'dark' : 'light',
   );
 
   useEffect(() => {
@@ -61,23 +61,6 @@ export function useActiveSection() {
   }, []);
 
   return active;
-}
-
-/** Decide whether the WebGL hero is worth loading on this device. */
-export function canUse3D() {
-  if (typeof window === 'undefined') return false;
-  if (window.innerWidth < 768) return false;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-  if (nav.connection?.saveData) return false;
-  if ((nav.hardwareConcurrency ?? 8) < 4) return false;
-  if ((nav.deviceMemory ?? 8) < 4) return false;
-  try {
-    const c = document.createElement('canvas');
-    return !!(c.getContext('webgl2') || c.getContext('webgl'));
-  } catch {
-    return false;
-  }
 }
 
 export function scrollToSection(id: string) {

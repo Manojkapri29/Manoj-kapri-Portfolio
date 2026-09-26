@@ -45,7 +45,7 @@ function Counter({ value, decimals, suffix }: { value: number; decimals: number;
 export function KpiStrip() {
   return (
     <section aria-label="Key figures" className={`${wrap} -mt-4 pb-8`}>
-      <ul className="grid grid-cols-2 overflow-hidden rounded-md border border-line bg-surface md:grid-cols-4">
+      <ul className="grid grid-cols-2 overflow-hidden rounded-2xl border border-line bg-surface md:grid-cols-4">
         {kpis.map((k, i) => (
           <li
             key={k.label}
@@ -56,8 +56,8 @@ export function KpiStrip() {
               i === 2 ? 'md:border-l' : '',
             ].join(' ')}
           >
-            <span className="absolute right-2 top-1.5 font-mono text-[10px] text-muted" aria-hidden="true">{k.cell}</span>
-            <p className="font-mono text-3xl font-bold text-accent-ink md:text-4xl">
+            <span className="absolute right-2 top-1.5 text-[10px] text-muted" aria-hidden="true">{k.cell}</span>
+            <p className="text-3xl font-bold text-accent-ink md:text-4xl">
               <Counter value={k.value} decimals={k.decimals} suffix={k.suffix} />
             </p>
             <p className="mt-1 text-sm text-muted">{k.label}</p>
@@ -87,7 +87,7 @@ function FormulaSheet() {
   };
 
   return (
-    <div className="mt-10 overflow-hidden rounded-md border border-line bg-surface">
+    <div className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface">
       <div className="flex items-center justify-between border-b border-line px-4 py-2.5">
         <p className="font-mono text-xs font-semibold tracking-wider text-ink">FORMULAS.xlsx</p>
         <p className="text-xs text-muted">Click a cell to see a formula I use</p>
@@ -170,7 +170,7 @@ export function Skills() {
     <section id="skills" aria-labelledby="skills-heading" className={`${wrap} py-14 md:py-20`}>
       <SectionLabel id="skills" title="SKILLS" range={ranges.skills} />
       <Reveal>
-        <div className="overflow-hidden rounded-md border border-line bg-surface md:grid md:grid-cols-[240px_minmax(0,1fr)]">
+        <div className="overflow-hidden rounded-2xl border border-line bg-surface md:grid md:grid-cols-[240px_minmax(0,1fr)]">
           <div
             ref={listRef}
             role="tablist"
@@ -179,7 +179,7 @@ export function Skills() {
             onKeyDown={onKey}
             className="no-scrollbar flex overflow-x-auto border-b border-line md:block md:border-b-0 md:border-r"
           >
-            <p className="hidden border-b border-line bg-surface-2 px-4 py-2 font-mono text-[11px] tracking-wider text-muted md:block" aria-hidden="true">
+            <p className="hidden border-b border-line bg-surface-2 px-4 py-2 text-[11px] tracking-wider text-muted md:block" aria-hidden="true">
               ROW LABELS ▾
             </p>
             {skills.map((s, i) => (
@@ -199,12 +199,12 @@ export function Skills() {
               >
                 {i === cat && <span className="absolute inset-x-0 bottom-0 h-0.5 bg-accent md:inset-y-0 md:left-0 md:right-auto md:h-auto md:w-0.5" aria-hidden="true" />}
                 {s.category}
-                <span className="ml-2 font-mono text-[11px] text-muted">{s.items.length}</span>
+                <span className="ml-2 text-[11px] text-muted">{s.items.length}</span>
               </button>
             ))}
           </div>
           <div id={`${tabsId}-panel`} role="tabpanel" aria-labelledby={`${tabsId}-tab-${cat}`} className="min-h-[180px] p-5">
-            <p className="mb-4 font-mono text-[11px] tracking-wider text-muted" aria-hidden="true">
+            <p className="mb-4 text-[11px] tracking-wider text-muted" aria-hidden="true">
               VALUES · {skills[cat].category.toUpperCase()}
             </p>
             <AnimatePresence mode="wait">
@@ -257,20 +257,19 @@ export function Experience() {
         {experience.map((job, i) => (
           <li key={job.org} className="relative">
             <span
-              className="absolute -left-8 top-6 grid size-6 place-items-center rounded-sm border border-accent bg-bg font-mono text-[10px] font-bold text-accent-ink md:-left-12 md:size-10 md:text-[11px]"
+              className="absolute -left-8 top-6 grid size-6 place-items-center rounded-full border border-white/70 bg-surface text-[10px] font-semibold text-accent-ink shadow md:-left-12 md:size-10 md:text-[11px]"
               aria-hidden="true"
             >
               C{2 + i * 4}
             </span>
             <Reveal x={24} y={0}>
-              <article className="group relative rounded-sm border-2 border-accent/70 bg-surface p-5 shadow-[0_0_0_4px_var(--accent-soft)] transition-colors hover:border-accent md:p-6">
-                <span className="absolute -bottom-[5px] -right-[5px] size-2 border border-bg bg-accent" aria-hidden="true" />
-                <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
+              <article className="group relative rounded-2xl border border-white/70 bg-surface p-5 shadow-xl shadow-indigo-900/10 transition-colors hover:border-accent/50 md:p-6 dark:border-white/10">
+                                <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
                   <div>
                     <h3 className="text-lg font-bold text-ink">{job.role}</h3>
                     <p className="text-[15px] font-semibold text-accent-ink">{job.org}</p>
                   </div>
-                  <div className="text-right font-mono text-[12.5px] text-muted">
+                  <div className="text-right text-[13px] text-muted">
                     <p>{job.period}</p>
                     {job.note && <p className="text-teal">{job.note}</p>}
                   </div>
@@ -301,11 +300,11 @@ export function Education() {
       <div className="grid gap-4 md:grid-cols-3">
         {education.map((e, i) => (
           <Reveal key={e.degree} delay={i * 0.06}>
-            <article className="h-full rounded-md border border-line bg-surface p-5 transition-colors hover:border-accent/60">
+            <article className="h-full rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-accent/60">
               <GraduationCap className="size-6 text-accent-ink" aria-hidden="true" />
               <h3 className="mt-3 font-bold text-ink">{e.degree}</h3>
               <p className="text-sm text-muted">{e.school}</p>
-              <p className="mt-3 font-mono text-[12.5px] text-ink">
+              <p className="mt-3 text-[12.5px] text-ink">
                 {e.period}
                 {e.score && <span className="ml-2 rounded bg-accent-soft px-1.5 py-0.5 font-semibold text-accent-ink">{e.score}</span>}
               </p>
@@ -316,7 +315,7 @@ export function Education() {
       <Reveal delay={0.1}>
         <ul className="mt-6 flex flex-wrap gap-2.5" aria-label="Certifications">
           {certifications.map((c) => (
-            <li key={c} className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink">
+            <li key={c} className="inline-flex items-center gap-2 rounded-2xl border border-line bg-surface px-3 py-2 text-sm text-ink">
               <Award className="size-4 text-teal" aria-hidden="true" />
               {c}
             </li>
@@ -337,8 +336,8 @@ export function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-heading" className={`${wrap} py-16 md:py-28`}>
       <Reveal>
-        <div className="rounded-md border border-line bg-surface p-6 text-center md:p-12">
-          <h2 id="contact-heading" className="caret font-mono text-xl font-bold leading-snug text-ink outline-none sm:text-2xl md:text-4xl">
+        <div className="rounded-2xl border border-line bg-surface p-6 text-center md:p-12">
+          <h2 id="contact-heading" className="caret text-2xl font-semibold leading-snug tracking-[-0.02em] text-ink outline-none sm:text-3xl md:text-5xl">
             <span className="text-accent-ink">=CONNECT</span>
             {contact.heading.replace('=CONNECT', '')}
           </h2>
@@ -367,7 +366,7 @@ export function Contact() {
               <Phone className="size-4" aria-hidden="true" /> {profile.phone}
             </a>
           </div>
-          <p className="mt-5 font-mono text-[12.5px] text-muted">{profile.email}</p>
+          <p className="mt-5 text-[12.5px] text-muted">{profile.email}</p>
         </div>
       </Reveal>
     </section>
@@ -376,7 +375,7 @@ export function Contact() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-line px-4 pb-24 pt-8 text-center font-mono text-[12px] text-muted md:pb-16">
+    <footer className="border-t border-line px-4 pb-24 pt-8 text-center text-[12px] text-muted md:pb-16">
       {site.footer}
     </footer>
   );

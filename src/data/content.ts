@@ -273,27 +273,9 @@ export const contact = {
 export const isPlaceholder = (v: string) => /\{\{.*\}\}/.test(v);
 
 /**
- * 3D Data City landmark towers (desktop only).
- * Heights use only real facts from this file:
- *  - skills: number of tools in each category
- *  - experience: months in each role (from the periods above)
- */
-export const cityLandmarks = {
-  skills: skills.map((s) => ({ label: s.category, sub: `${s.items.length} tools`, height: 2 + s.items.length * 1.1 })),
-  experience: [
-    { label: 'C2 · The LaLiT', sub: '6 months', height: 2 + 6 * 0.32 },
-    { label: 'C6 · AECOM', sub: '7 months', height: 2 + 7 * 0.32 },
-    { label: 'C10 · M3M India', sub: '29 months', height: 2 + 29 * 0.32 },
-    { label: 'C14 · NextHikes', sub: '10 months', height: 2 + 10 * 0.32 },
-  ],
-  projects: projects.map((p, i) => ({ label: `D${i + 2} · ${p.name.split(' ').slice(0, 2).join(' ')}`, sub: p.tags.join(' · '), height: 5 + i * 1.5 })),
-  education: education.map((e, i) => ({ label: e.degree.split(' — ')[0], sub: e.period, height: 6 - i * 1.4 })),
-};
-
-/**
  * PERSONAL INTRODUCTION — told as a comic: "The Data Innings".
- * `body` is Manoj's own introduction, word for word. Cricket headings, the
- * sound effects (`sfx`) and scenes are just the storytelling layer — edit freely.
+ * `body` is Manoj's own introduction, word for word. Cricket headings and
+ * scenes are just the storytelling layer — edit freely.
  * `scene` picks the artwork: cover | stadium | scoreboard | wagonwheel | grounds | decision | nets | finale
  */
 export const intro = [
@@ -304,7 +286,6 @@ export const intro = [
     title: 'The Data Innings',
     bubble: "Hi, I'm Manoj Kapri.",
     body: "I have close to three years of experience across MIS reporting and data analysis, and I'm someone who genuinely enjoys working with data — whether it's cleaning it, analyzing it, or turning it into insights that drive real decisions.",
-    sfx: '',
   },
   {
     cell: 'A2',
@@ -313,7 +294,6 @@ export const intro = [
     title: 'Before the spreadsheets…',
     // Manoj's cricket background — add detail here (team, level, years) if you like.
     body: 'Before the spreadsheets, I was a professional cricketer.',
-    sfx: 'CRACK!',
   },
   {
     cell: 'A3',
@@ -321,7 +301,6 @@ export const intro = [
     kicker: 'Innings 1 · M3M India · MIS Executive',
     title: 'Opening the batting',
     body: 'I started my career at M3M India as an MIS Executive, where I spent about two and a half years in the real estate sector managing large-scale reporting and dashboards.',
-    sfx: 'ON STRIKE!',
   },
   {
     cell: 'A4',
@@ -329,7 +308,6 @@ export const intro = [
     kicker: 'Innings 2 · AECOM India · Data Analyst',
     title: 'New ground',
     body: 'From there, I moved to AECOM India as a Data Analyst, which strengthened my core analytical and reporting skills.',
-    sfx: 'SWITCH HIT!',
   },
   {
     cell: 'A5',
@@ -337,7 +315,6 @@ export const intro = [
     kicker: 'Innings 3 · The LaLiT Suri Hospitality Group',
     title: '12 grounds, one scorecard',
     body: 'Most recently, I worked as an MIS Executive at The Bharat Hotels Limited (The LaLiT Suri Hospitality Group), handling dashboards and reporting across 12+ properties pan-India within a Corporate L&D and MIS function.',
-    sfx: 'HOWZAT!',
   },
   {
     cell: 'A6',
@@ -345,7 +322,6 @@ export const intro = [
     kicker: 'The review',
     title: 'Choosing my format',
     body: "I moved on from that role because I wanted to focus more deeply on hands-on data analysis rather than L&D-related reporting, and I'm now looking to build a career fully centered around data.",
-    sfx: 'DRS: DATA!',
   },
   {
     cell: 'A7',
@@ -353,7 +329,6 @@ export const intro = [
     kicker: 'Nets practice · Digicrome · Manipal University Jaipur',
     title: 'Practice makes the player',
     body: 'Alongside my work experience, I did an online Data Science internship with Digicrome, which gave me practical exposure to Python, EDA, and machine learning. I also completed my MBA in Data Science and Analytics from Manipal University Jaipur with an 8.27 CGPA, which strengthened my foundation in Advanced Excel, Python, SQL, and Power BI.',
-    sfx: '8.27!',
   },
   {
     cell: 'A8',
@@ -361,6 +336,5 @@ export const intro = [
     kicker: 'What I bring',
     title: 'Ready for the next match',
     body: "What I bring is a mix of real business reporting experience and formal data science training, along with a genuine interest in solving problems through data — and I'm looking forward to applying that here.",
-    sfx: 'GAME ON!',
   },
 ] as const;

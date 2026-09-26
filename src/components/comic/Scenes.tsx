@@ -278,7 +278,7 @@ function Bat({ p, x, y, rot = 0, s = 1 }: { p: string; x: number; y: number; rot
       <path d="M-14 4 Q-15 60 -12 108 Q0 116 12 108 Q15 60 14 4 Q0 0 -14 4 Z" fill={`url(#${p}-willow)`} />
       <path d="M0 10 L0 104" stroke="#8a6436" strokeOpacity="0.35" strokeWidth="2" />
       <rect x="-10" y="22" width="20" height="30" rx="2" fill={C.blue} />
-      <text x="0" y="41" textAnchor="middle" fontFamily="Bangers, sans-serif" fontSize="9" fill="#fff">MK</text>
+      <text x="0" y="41" textAnchor="middle" fontFamily="DM Sans Variable, sans-serif" fontSize="8" fontWeight="700" fill="#fff">MK</text>
     </g>
   );
 }
@@ -289,8 +289,8 @@ function Frame({ children, label }: { children: React.ReactNode; label?: string 
       {children}
       {label && (
         <g>
-          <rect x="10" y="10" width={label.length * 7.6 + 18} height="22" fill={C.blue} stroke={C.ink} strokeWidth="2.5" />
-          <text x="19" y="26" fontFamily="Bangers, sans-serif" fontSize="15" letterSpacing="1" fill="#fff">{label}</text>
+          <rect x="12" y="12" width={label.length * 8.2 + 22} height="24" rx="12" fill="#17173d" fillOpacity="0.72" />
+          <text x="23" y="28.5" fontFamily="DM Sans Variable, sans-serif" fontSize="12" fontWeight="600" letterSpacing="1.5" fill="#fff">{label}</text>
         </g>
       )}
     </svg>
