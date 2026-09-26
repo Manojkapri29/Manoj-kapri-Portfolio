@@ -11,14 +11,7 @@ export default defineConfig({
   },
   build: {
     target: 'es2020',
-    rollupOptions: {
-      output: {
-        // Keep the heavy 3D and chart libraries out of the initial bundle.
-        manualChunks(id) {
-          if (id.includes('node_modules/three') || id.includes('@react-three')) return 'three';
-          if (id.includes('node_modules/recharts') || id.includes('node_modules/d3-')) return 'charts';
-        },
-      },
-    },
+    // three.js and recharts are split out automatically via React.lazy() imports.
+    chunkSizeWarningLimit: 1100,
   },
 });
