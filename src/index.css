@@ -138,3 +138,39 @@ body {
 
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── 3D Data City mode (desktop) ────────────────────────────────────────── */
+html.city body { background-image: none; background-color: transparent; }
+
+/* Panels become frosted glass so the city shows through */
+html.city.dark, html.city:not(.light) {
+  --surface: rgba(14, 20, 17, 0.72);
+  --surface-2: rgba(28, 40, 33, 0.7);
+}
+html.city.light {
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-2: rgba(241, 244, 240, 0.8);
+}
+html.city .bg-surface,
+html.city [class*="bg-surface/"],
+html.city [class*="bg-bg/"] {
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  backdrop-filter: blur(12px) saturate(1.15);
+}
+
+@media (min-width: 768px) {
+  /* Content sits on the left; the city fills the right side of the screen */
+  html.city #main > section:not(#about) {
+    margin-left: max(1rem, calc((100vw - 72rem) / 2));
+    margin-right: auto;
+    max-width: 44rem;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  html.city #main > section[aria-label="Key figures"] { min-height: 0; }
+  html.city #about .hero-summary { text-shadow: 0 1px 12px var(--bg); }
+  html.city #about h1, html.city #about p { text-shadow: 0 2px 18px var(--bg); }
+  html.city #education .grid { grid-template-columns: 1fr; }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Briefcase, FolderKanban, GraduationCap, Mail, Moon, Search, Sun, User, Wrench } from 'lucide-react';
+import { Briefcase, Building2, FolderKanban, GraduationCap, LayoutList, Mail, Moon, Search, Sun, User, Wrench } from 'lucide-react';
 import { profile, sections, site, type SectionId } from '../data/content';
 import { scrollToSection, useReducedMotion } from '../hooks/useSite';
 import { SheetMark } from './icons';
@@ -37,9 +37,12 @@ type TopBarProps = {
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
   onOpenPalette: () => void;
+  /** Present only when the 3D city is available on this device. */
+  view?: 'city' | 'simple';
+  onToggleView?: () => void;
 };
 
-export function TopBar({ active, theme, onToggleTheme, onOpenPalette }: TopBarProps) {
+export function TopBar({ active, theme, onToggleTheme, onOpenPalette, view, onToggleView }: TopBarProps) {
   const current = sections.find((s) => s.id === active) ?? sections[0];
   const typed = useTypedFormula();
   const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
@@ -65,6 +68,17 @@ export function TopBar({ active, theme, onToggleTheme, onOpenPalette }: TopBarPr
             <span className="hidden sm:inline">Go to…</span>
             <kbd className="hidden rounded border border-line px-1 text-[10px] sm:inline">{isMac ? '⌘' : 'Ctrl'} K</kbd>
           </button>
+          {view && onToggleView && (
+            <button
+              type="button"
+              onClick={onToggleView}
+              className="flex h-8 items-center gap-1.5 rounded-md border border-line px-2.5 text-[12px] font-medium text-muted transition-colors hover:border-line-strong hover:text-ink"
+              aria-label={view === 'city' ? 'Switch to simple view (turn off 3D city)' : 'Switch to 3D city view'}
+            >
+              {view === 'city' ? <LayoutList className="size-3.5" aria-hidden="true" /> : <Building2 className="size-3.5" aria-hidden="true" />}
+              <span>{view === 'city' ? 'Simple view' : '3D city'}</span>
+            </button>
+          )}
           <button
             type="button"
             onClick={onToggleTheme}

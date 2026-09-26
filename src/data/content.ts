@@ -271,3 +271,21 @@ export const contact = {
 
 /** True while a value is still an unfilled {{PLACEHOLDER}}. */
 export const isPlaceholder = (v: string) => /\{\{.*\}\}/.test(v);
+
+/**
+ * 3D Data City landmark towers (desktop only).
+ * Heights use only real facts from this file:
+ *  - skills: number of tools in each category
+ *  - experience: months in each role (from the periods above)
+ */
+export const cityLandmarks = {
+  skills: skills.map((s) => ({ label: s.category, sub: `${s.items.length} tools`, height: 2 + s.items.length * 1.1 })),
+  experience: [
+    { label: 'C2 · The LaLiT', sub: '6 months', height: 2 + 6 * 0.32 },
+    { label: 'C6 · AECOM', sub: '7 months', height: 2 + 7 * 0.32 },
+    { label: 'C10 · M3M India', sub: '29 months', height: 2 + 29 * 0.32 },
+    { label: 'C14 · NextHikes', sub: '10 months', height: 2 + 10 * 0.32 },
+  ],
+  projects: projects.map((p, i) => ({ label: `D${i + 2} · ${p.name.split(' ').slice(0, 2).join(' ')}`, sub: p.tags.join(' · '), height: 5 + i * 1.5 })),
+  education: education.map((e, i) => ({ label: e.degree.split(' — ')[0], sub: e.period, height: 6 - i * 1.4 })),
+};

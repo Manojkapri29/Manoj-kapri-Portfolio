@@ -1,11 +1,8 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
 import { ArrowRight, FileDown, Mail, MapPin, Phone } from 'lucide-react';
 import { profile } from '../data/content';
-import { canUse3D, scrollToSection } from '../hooks/useSite';
+import { scrollToSection } from '../hooks/useSite';
 import { heroBars } from './heroBars';
 import { GithubIcon, LinkedinIcon } from './icons';
-
-const Hero3D = lazy(() => import('./Hero3D'));
 
 
 /** Lightweight 2D chart used on mobile, low-power devices and reduced motion. */
@@ -62,13 +59,11 @@ export function HeroFallback() {
 const chip =
   'inline-flex items-center gap-2 rounded-md border border-line bg-surface/70 px-3 py-2 font-mono text-[12.5px] text-ink transition-colors hover:border-accent hover:text-accent-ink';
 
-export default function Hero() {
-  const [use3D, setUse3D] = useState(false);
-  useEffect(() => setUse3D(canUse3D()), []);
-
+export default function Hero({ showChart = true }: { showChart?: boolean }) {
   return (
     <section id="about" aria-labelledby="about-heading" className="relative isolate overflow-hidden">
-      {/* Chart layer — faded into the page with a mask so no box edges show */}
+      {/* Chart layer (simple view / mobile) — the 3D city replaces it on desktop */}
+      {showChart && (
       <div
         className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-full opacity-35 md:w-[64%] md:opacity-100"
         style={{
@@ -79,15 +74,10 @@ export default function Hero() {
         }}
       >
         <div className="absolute inset-0 flex items-end px-4 pb-10 md:pb-16">
-          {use3D ? (
-            <Suspense fallback={<HeroFallback />}>
-              <Hero3D />
-            </Suspense>
-          ) : (
-            <HeroFallback />
-          )}
+          <HeroFallback />
         </div>
       </div>
+      )}
 
       <div className="mx-auto flex min-h-[calc(100svh-140px)] max-w-6xl flex-col justify-center px-4 py-16 md:py-24">
         <p className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-accent/40 bg-accent-soft px-3 py-1 font-mono text-[12px] text-accent-ink">

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Copy, CornerDownLeft, FileDown, Moon, Search } from 'lucide-react';
+import { Building2, Copy, CornerDownLeft, FileDown, Moon, Search } from 'lucide-react';
 import { profile, sections } from '../data/content';
 import { scrollToSection, useMediaQuery, useReducedMotion } from '../hooks/useSite';
 import { GithubIcon, LinkedinIcon } from './icons';
@@ -9,7 +9,7 @@ import { copyText, useToast } from './Toast';
 type Cmd = { id: string; label: string; hint: string; icon: React.ReactNode; run: () => void };
 
 /** Ctrl/Cmd+K quick navigation. */
-export function CommandPalette({ open, onClose, onToggleTheme }: { open: boolean; onClose: () => void; onToggleTheme: () => void }) {
+export function CommandPalette({ open, onClose, onToggleTheme, onToggleView }: { open: boolean; onClose: () => void; onToggleTheme: () => void; onToggleView?: () => void }) {
   const toast = useToast();
   const [q, setQ] = useState('');
   const [idx, setIdx] = useState(0);
@@ -29,11 +29,14 @@ export function CommandPalette({ open, onClose, onToggleTheme }: { open: boolean
       { id: 'gh', label: 'Open GitHub', hint: 'github.com', icon: <GithubIcon />, run: () => window.open(profile.github, '_blank', 'noopener') },
       { id: 'theme', label: 'Toggle light / dark mode', hint: 'Theme', icon: <Moon className="size-4" />, run: onToggleTheme },
     ];
+    if (onToggleView) {
+      actions.push({ id: 'view', label: 'Toggle 3D city / simple view', hint: 'View', icon: <Building2 className="size-4" />, run: onToggleView });
+    }
     if (__HAS_RESUME__) {
       actions.splice(1, 0, { id: 'cv', label: 'Download resume', hint: 'PDF', icon: <FileDown className="size-4" />, run: () => window.open(profile.resume, '_blank') });
     }
     return [...go, ...actions];
-  }, [onToggleTheme, toast]);
+  }, [onToggleTheme, onToggleView, toast]);
 
   const filtered = commands.filter((c) => c.label.toLowerCase().includes(q.toLowerCase()) || c.hint.toLowerCase().includes(q.toLowerCase()));
 
