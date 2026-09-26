@@ -179,7 +179,7 @@ export const experience = [
   {
     role: 'Data Science Intern',
     org: 'NextHikes IT Solutions (Part-time, Remote)',
-    period: 'Sep 2024 – Jun 2025',
+    period: 'Sep 2024 – Nov 2025',
     points: [
       'Worked on price prediction and sales forecasting projects in Python (Pandas, Scikit-learn).',
       'Performed data cleaning and EDA, and created simple web apps for the models using Streamlit.',
@@ -326,7 +326,7 @@ export const story = {
   ],
   why: "I moved on from that role because I wanted to focus more deeply on hands-on data analysis rather than L&D-related reporting, and I'm now looking to build a career fully centered around data.",
   learning:
-    'Alongside my work experience, I did an online Data Science internship with Digicrome, which gave me practical exposure to Python, EDA, and machine learning. I also completed my MBA in Data Science and Analytics from Manipal University Jaipur with an 8.27 CGPA, which strengthened my foundation in Advanced Excel, Python, SQL, and Power BI.',
+    'Alongside my work experience, I did an online Data Science internship with NextHikes, which gave me practical exposure to Python, EDA, and machine learning. I also completed my MBA in Data Science and Analytics from Manipal University Jaipur with an 8.27 CGPA, which strengthened my foundation in Advanced Excel, Python, SQL, and Power BI.',
   bring:
     "What I bring is a mix of real business reporting experience and formal data science training, along with a genuine interest in solving problems through data — and I'm looking forward to applying that here.",
 };
