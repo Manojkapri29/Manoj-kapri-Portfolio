@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Theme tokens ─────────────────────────────────────────────────────────── */
+:root,
+.dark {
+  --bg: #0b0f0d;
+  --surface: #111714;
+  --surface-2: #17201b;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --grid: rgba(255, 255, 255, 0.035);
+  --ink: #e8edea;
+  --muted: #9aa59f;
+  --accent: #107c41;          /* Excel green — fills */
+  --accent-ink: #4cc47f;      /* green for text/lines on dark (AA) */
+  --accent-soft: rgba(16, 124, 65, 0.16);
+  --teal: #2cc2bc;
+  --focus: #4cc47f;
+  color-scheme: dark;
+}
+
+.light {
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --surface-2: #f1f4f0;
+  --line: rgba(16, 24, 20, 0.1);
+  --line-strong: rgba(16, 24, 20, 0.2);
+  --grid: rgba(16, 24, 20, 0.045);
+  --ink: #16201b;
+  --muted: #56615b;
+  --accent: #107c41;
+  --accent-ink: #0c6535;
+  --accent-soft: rgba(16, 124, 65, 0.1);
+  --teal: #0b817c;
+  --focus: #107c41;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-teal: var(--teal);
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 112px;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  /* Faint spreadsheet grid, fixed to the viewport so the cell cursor can snap to it. */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--accent-soft); color: var(--accent-ink); }
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  z-index: 100;
+  padding: 8px 14px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: top 0.15s;
+}
+.skip-link:focus { top: 12px; }
+
+/* Blinking text cursor (contact heading, formula bar) */
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.08em;
+  height: 1em;
+  margin-left: 0.08em;
+  vertical-align: -0.12em;
+  background: var(--accent-ink);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+@keyframes caret-blink { 50% { opacity: 0; } }
+
+/* Visible placeholders ({{ADD_METRIC: ...}}) */
+.placeholder-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #b7791f;
+  background: rgba(183, 121, 31, 0.1);
+  border: 1px dashed rgba(183, 121, 31, 0.5);
+  padding: 1px 6px;
+  border-radius: 3px;
+  word-break: break-word;
+}
+
+/* 2D fallback hero chart */
+@keyframes bar-rise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes line-draw { to { stroke-dashoffset: 0; } }
+.fallback-bar { transform-box: fill-box; transform-origin: bottom; animation: bar-rise 1.4s cubic-bezier(.2,.8,.2,1) both; }
+.fallback-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: line-draw 1.6s 0.9s ease-out forwards; }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
