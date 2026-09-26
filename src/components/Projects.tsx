@@ -24,9 +24,7 @@ function TiltCard({ project, index, onOpen }: { project: Project; index: number;
   const tilt = fine && !reduced;
 
   return (
-    <motion.button
-      type="button"
-      onClick={onOpen}
+    <motion.article
       onPointerMove={(e) => {
         if (!tilt) return;
         const r = e.currentTarget.getBoundingClientRect();
@@ -35,8 +33,7 @@ function TiltCard({ project, index, onOpen }: { project: Project; index: number;
       }}
       onPointerLeave={() => { mx.set(0.5); my.set(0.5); }}
       style={tilt ? { rotateX: rx, rotateY: ry, transformPerspective: 900 } : undefined}
-      aria-haspopup="dialog"
-      className="group relative flex h-full w-full flex-col rounded-md border border-line bg-surface p-6 text-left transition-colors hover:border-accent"
+      className="group relative flex h-full w-full cursor-pointer flex-col rounded-md border border-line bg-surface p-6 text-left transition-colors hover:border-accent has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-offset-2 has-[button:focus-visible]:outline-[var(--focus)]"
     >
       <span className="absolute right-3 top-2 font-mono text-[10px] text-muted" aria-hidden="true">D{index + 2}</span>
       <div className="flex flex-wrap gap-1.5">
@@ -44,12 +41,27 @@ function TiltCard({ project, index, onOpen }: { project: Project; index: number;
           <span key={t} className="rounded bg-accent-soft px-2 py-0.5 font-mono text-[11px] text-accent-ink">{t}</span>
         ))}
       </div>
-      <h3 className="mt-4 text-lg font-bold text-ink">{project.name}</h3>
+      <h3 className="mt-4 text-lg font-bold text-ink">
+        {/* Stretched button: the whole card is clickable, markup stays valid */}
+        <button
+          type="button"
+          onClick={onOpen}
+          aria-haspopup="dialog"
+          className="text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+        >
+          {project.name}
+        </button>
+      </h3>
       <p className="mt-2 flex-1 text-[14.5px] text-ink/85">{project.description}</p>
-      <span className="mt-5 inline-flex items-center gap-1.5 font-mono text-[12px] text-accent-ink">
+      <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tools used">
+        {project.tools.map((t) => (
+          <li key={t} className="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-muted">{t}</li>
+        ))}
+      </ul>
+      <span className="mt-5 inline-flex items-center gap-1.5 font-mono text-[12px] text-accent-ink" aria-hidden="true">
         Open dashboard view <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
       </span>
-    </motion.button>
+    </motion.article>
   );
 }
 

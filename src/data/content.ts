@@ -201,7 +201,7 @@ export const projects: Project[] = [
     name: 'Rossmann Pharmaceuticals Sales Forecasting',
     tags: ['Forecasting', 'Python'],
     description: 'Analyzed store sales data and built a model in Python to forecast future sales.',
-    tools: ['Python', 'Pandas', 'Scikit-learn'],
+    tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Scikit-learn'],
     metrics: [
       { label: 'Stores analyzed', value: '{{ADD_METRIC: number of stores}}' },
       { label: 'Forecast error', value: '{{ADD_METRIC: MAPE / RMSE}}' },
@@ -214,7 +214,7 @@ export const projects: Project[] = [
     name: 'Retail Sales Forecasting',
     tags: ['Forecasting', 'Retail'],
     description: 'Built a forecasting model for multiple stores and compared forecast with actual sales.',
-    tools: ['Python', 'Pandas', 'Scikit-learn'],
+    tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Scikit-learn'],
     metrics: [
       { label: 'Stores covered', value: '{{ADD_METRIC: number of stores}}' },
       { label: 'Forecast error', value: '{{ADD_METRIC: MAPE / RMSE}}' },
