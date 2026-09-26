@@ -140,15 +140,16 @@ body {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
 /* ── 3D Data City mode (desktop) ────────────────────────────────────────── */
+html.city { background-color: var(--bg); }
 html.city body { background-image: none; background-color: transparent; }
 
 /* Panels become frosted glass so the city shows through */
 html.city.dark, html.city:not(.light) {
-  --surface: rgba(14, 20, 17, 0.72);
-  --surface-2: rgba(28, 40, 33, 0.7);
+  --surface: rgba(14, 20, 17, 0.86);
+  --surface-2: rgba(28, 40, 33, 0.86);
 }
 html.city.light {
-  --surface: rgba(255, 255, 255, 0.78);
+  --surface: rgba(255, 255, 255, 0.88);
   --surface-2: rgba(241, 244, 240, 0.8);
 }
 html.city .bg-surface,

@@ -61,19 +61,19 @@ export function TopBar({ active, theme, onToggleTheme, onOpenPalette, view, onTo
             type="button"
             onClick={onOpenPalette}
             className="flex h-8 items-center gap-2 rounded-md border border-line px-2.5 font-mono text-[12px] text-muted transition-colors hover:border-line-strong hover:text-ink"
-            aria-label="Open quick navigation"
+            title="Quick navigation"
             aria-keyshortcuts="Control+K Meta+K"
           >
             <Search className="size-3.5" aria-hidden="true" />
-            <span className="hidden sm:inline">Go to…</span>
-            <kbd className="hidden rounded border border-line px-1 text-[10px] sm:inline">{isMac ? '⌘' : 'Ctrl'} K</kbd>
+            <span className="sr-only sm:not-sr-only">Go to…</span>
+            <kbd className="hidden rounded border border-line px-1 text-[10px] sm:inline" aria-hidden="true">{isMac ? '⌘' : 'Ctrl'} K</kbd>
           </button>
           {view && onToggleView && (
             <button
               type="button"
               onClick={onToggleView}
               className="flex h-8 items-center gap-1.5 rounded-md border border-line px-2.5 text-[12px] font-medium text-muted transition-colors hover:border-line-strong hover:text-ink"
-              aria-label={view === 'city' ? 'Switch to simple view (turn off 3D city)' : 'Switch to 3D city view'}
+              title={view === 'city' ? 'Turn off the 3D city' : 'Turn on the 3D city'}
             >
               {view === 'city' ? <LayoutList className="size-3.5" aria-hidden="true" /> : <Building2 className="size-3.5" aria-hidden="true" />}
               <span>{view === 'city' ? 'Simple view' : '3D city'}</span>
