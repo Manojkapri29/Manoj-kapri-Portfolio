@@ -196,7 +196,7 @@ html.city [class*="bg-bg/"] {
   background-size: 9px 9px;
 }
 .comic-rays {
-  background: repeating-conic-gradient(from 0deg at 50% 45%, rgba(255, 204, 50, 0.22) 0deg 7deg, transparent 7deg 18deg);
+  background: repeating-conic-gradient(from 0deg at 50% 45%, rgba(124, 157, 255, 0.22) 0deg 7deg, transparent 7deg 18deg);
 }
 /* Speech-bubble tail pointing down-left toward the cover */
 .speech::after {

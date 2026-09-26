@@ -51,8 +51,8 @@ function Sfx({ text, className = '' }: { text: string; className?: string }) {
       aria-hidden="true"
     >
       <svg viewBox="-22 0 164 120" className="w-full drop-shadow-[5px_5px_0_#0b0c14]">
-        <polygon points={pts} fill={C.yellow} stroke={C.ink} strokeWidth="4" strokeLinejoin="round" />
-        <text x="60" y="70" textAnchor="middle" fontFamily="Bangers, sans-serif" fontSize={text.length > 9 ? 19 : 26} letterSpacing="1.5" fill={C.red} stroke={C.ink} strokeWidth="1.2">
+        <polygon points={pts} fill={C.blue} stroke={C.ink} strokeWidth="4" strokeLinejoin="round" />
+        <text x="60" y="70" textAnchor="middle" fontFamily="Bangers, sans-serif" fontSize={text.length > 9 ? 19 : 26} letterSpacing="1.5" fill="#ffffff" stroke={C.ink} strokeWidth="1.2">
           {text}
         </text>
       </svg>
@@ -81,7 +81,7 @@ function Panel({ children, className = '', tilt = 0, delay = 0 }: { children: Re
 /** Yellow narration box, comic style. */
 function Caption({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`border-[3px] border-[#0b0c14] bg-[#ffcc32] px-4 py-3 font-comic text-[16.5px] font-bold leading-snug text-[#0b0c14] shadow-[4px_4px_0_#0b0c14] sm:text-[17px] ${className}`}>
+    <div className={`border-[3px] border-[#0b0c14] bg-[#1f37b0] px-4 py-3 font-comic text-[16.5px] font-bold leading-snug text-white shadow-[4px_4px_0_#0b0c14] sm:text-[17px] ${className}`}>
       {children}
     </div>
   );
@@ -112,7 +112,7 @@ function Cover({ ch }: { ch: Chapter }) {
           <span className="border-[3px] border-[#0b0c14] bg-[#e0201f] px-2 py-0.5 font-bangers text-lg tracking-wider text-white shadow-[3px_3px_0_#0b0c14]">ISSUE #1</span>
           <span className="border-[3px] border-[#0b0c14] bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-[#0b0c14] shadow-[3px_3px_0_#0b0c14]">DAY-NIGHT MATCH</span>
         </div>
-        <h2 className="relative z-10 mt-14 px-4 text-center font-bangers text-[3rem] leading-[0.9] tracking-wide text-[#ffcc32] [text-shadow:4px_4px_0_#0b0c14] sm:text-7xl">
+        <h2 className="relative z-10 mt-14 px-4 text-center font-bangers text-[3rem] leading-[0.9] tracking-wide text-[#7cc4ff] [text-shadow:4px_4px_0_#0b0c14] sm:text-7xl">
           {ch.title}
         </h2>
         <img
@@ -159,7 +159,7 @@ function Cover({ ch }: { ch: Chapter }) {
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
-            className="inline-flex items-center gap-2 border-[3px] border-[#0b0c14] bg-[#ffcc32] px-5 py-2.5 font-bangers text-xl tracking-wider text-[#0b0c14] shadow-[4px_4px_0_#0b0c14] transition-transform hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 border-[3px] border-[#0b0c14] bg-[#27e0ff] px-5 py-2.5 font-bangers text-xl tracking-wider text-[#0b0c14] shadow-[4px_4px_0_#0b0c14] transition-transform hover:-translate-y-0.5"
           >
             Contact Me
           </a>
