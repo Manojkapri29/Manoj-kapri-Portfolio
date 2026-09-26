@@ -43,12 +43,12 @@ export default function CinematicHero() {
   const mobile = useMediaQuery('(max-width: 767px)');
   const reduced = useMediaQuery('(prefers-reduced-motion: reduce)');
   const [beat, setBeat] = useState(0);
-  const [loaded, setLoaded] = useState(0);
+  const bar = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const kind = mobile ? 'mobile' : 'desktop';
     const meta = META[kind];
-    const frames: (HTMLImageElement | undefined)[] = new Array(meta.count);
+    const frames: (ImageBitmap | HTMLImageElement | undefined)[] = new Array(meta.count);
     const cv = canvas.current!;
     const ctx = cv.getContext('2d')!;
     const state = { frame: 0 };
@@ -62,27 +62,52 @@ export default function CinematicHero() {
         if (frames[i + d]) return frames[i + d];
       }
     };
-    const render = () => {
+    let drawn: ImageBitmap | HTMLImageElement | undefined;
+    let sized = false;
+    const render = (force = false) => {
       const img = nearest(Math.round(state.frame));
-      if (!img) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = cv.clientWidth * dpr;
-      const h = cv.clientHeight * dpr;
+      if (!img || (img === drawn && !force && sized)) return; // nothing new to paint
+      drawn = img;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const w = Math.round(cv.clientWidth * dpr);
+      const h = Math.round(cv.clientHeight * dpr);
       if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+      sized = true;
       // object-fit: cover
       const s = Math.max(w / meta.width, h / meta.height);
       const dw = meta.width * s;
       const dh = meta.height * s;
       ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
     };
-    const load = (i: number) =>
-      new Promise<void>((res) => {
-        const img = new Image();
-        img.decoding = 'async';
-        img.onload = () => { if (alive) { frames[i] = img; done++; setLoaded(done / meta.count); if (i === Math.round(state.frame) || done === 1) render(); } res(); };
-        img.onerror = () => { done++; res(); };
-        img.src = src(i);
-      });
+    const progress = () => {
+      const el = bar.current;
+      if (!el) return;
+      el.style.width = `${Math.round((done / meta.count) * 100)}%`;
+      if (done >= meta.count) el.style.opacity = '0';
+    };
+    // Decode off the main thread (ImageBitmap) so scrubbing never waits on a decode.
+    const load = async (i: number) => {
+      try {
+        let bmp: ImageBitmap | HTMLImageElement;
+        if ('createImageBitmap' in window) {
+          const blob = await (await fetch(src(i))).blob();
+          bmp = await createImageBitmap(blob);
+        } else {
+          const img = new Image();
+          img.src = src(i);
+          await img.decode();
+          bmp = img;
+        }
+        if (!alive) return;
+        frames[i] = bmp;
+        if (i === 0 || Math.abs(i - state.frame) < 4) render(true);
+      } catch {
+        /* skip a missing frame — nearest() falls back to its neighbours */
+      } finally {
+        done++;
+        progress();
+      }
+    };
 
     // First frame, then every 4th (fast coarse scrub), then fill the gaps.
     const order: number[] = [0];
@@ -100,22 +125,24 @@ export default function CinematicHero() {
       : gsap.to(state, {
           frame: meta.count - 1,
           ease: 'none',
-          onUpdate: render,
+          onUpdate: () => render(),
           scrollTrigger: {
             trigger: section.current,
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 0.4,
+            scrub: true, // Lenis already smooths the scroll — no second lag
             onUpdate: (self) => {
               const p = self.progress;
-              setBeat(p < beats[0] ? 0 : p < beats[1] ? 1 : p < beats[2] ? 2 : 3);
+              const b = p < beats[0] ? 0 : p < beats[1] ? 1 : p < beats[2] ? 2 : 3;
+              setBeat((prev) => (prev === b ? prev : b));
             },
           },
         });
-    const onResize = () => render();
+    const onResize = () => render(true);
     window.addEventListener('resize', onResize);
     return () => {
       alive = false;
+      frames.forEach((f) => { if (f && 'close' in f) f.close(); });
       st?.scrollTrigger?.kill();
       st?.kill();
       window.removeEventListener('resize', onResize);
@@ -125,14 +152,14 @@ export default function CinematicHero() {
   return (
     <section id="about" ref={section} aria-labelledby="about-heading" className={`relative ${reduced ? 'h-[100svh]' : 'h-[420vh]'}`}>
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden bg-[#05060a]">
-        <canvas ref={canvas} className="absolute inset-0 h-full w-full" aria-hidden="true" />
+        <canvas ref={canvas} className="absolute inset-0 h-full w-full [transform:translateZ(0)]" aria-hidden="true" />
         {/* legibility: left scrim on desktop, top/bottom scrims on phones, fade into the page */}
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,10,0.85)_0%,rgba(5,6,10,0.35)_42%,transparent_62%)] max-md:bg-[linear-gradient(180deg,rgba(5,6,10,0.35)_0%,transparent_30%,rgba(5,6,10,0.55)_58%,rgba(5,6,10,0.95)_100%)]" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#05060a] to-transparent" aria-hidden="true" />
 
         {/* loader line */}
         <div className="absolute inset-x-0 top-0 h-px bg-white/10" aria-hidden="true">
-          <div className="h-full bg-[#7c9dff] transition-[width] duration-300" style={{ width: `${Math.round(loaded * 100)}%`, opacity: loaded >= 1 ? 0 : 1 }} />
+          <div ref={bar} className="h-full w-0 bg-[#7c9dff] transition-[width,opacity] duration-300" />
         </div>
 
         <div className="relative mx-auto h-full w-full max-w-6xl px-5 text-white sm:px-8">
