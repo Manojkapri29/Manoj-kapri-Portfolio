@@ -483,6 +483,8 @@ export default function DataCity({ onReady }: { onReady: () => void }) {
   const pal = useMemo(() => palette(light), [light]);
   const [active, setActive] = useState<SectionId>('about');
   const [tabVisible, setTabVisible] = useState(() => !document.hidden);
+  const [covered, setCovered] = useState(false);
+  const [booted, setBooted] = useState(false);
 
   useEffect(() => {
     const onVis = () => setTabVisible(!document.hidden);
@@ -490,11 +492,23 @@ export default function DataCity({ onReady }: { onReady: () => void }) {
     return () => document.removeEventListener('visibilitychange', onVis);
   }, []);
 
+  // The intro story covers the city at first — skip rendering until it scrolls away.
+  useEffect(() => {
+    const check = () => {
+      const el = document.getElementById('about');
+      setCovered(!!el && el.getBoundingClientRect().bottom > window.innerHeight + 40);
+    };
+    check();
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    return () => { window.removeEventListener('scroll', check); window.removeEventListener('resize', check); };
+  }, []);
+
   return (
     <div className="fixed inset-0 -z-10" aria-hidden="true">
       <Canvas
         dpr={[1, 1.5]}
-        frameloop={tabVisible ? 'always' : 'never'}
+        frameloop={tabVisible && (!covered || !booted) ? 'always' : 'never'}
         camera={{ position: keyframes.about.pos.toArray(), fov: 42, near: 0.5, far: 220 }}
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
       >
@@ -524,7 +538,7 @@ export default function DataCity({ onReady }: { onReady: () => void }) {
           <District key={id} id={id} pal={pal} active={active === id} />
         ))}
         <CameraRig onActive={setActive} />
-        <ReadySignal onReady={onReady} />
+        <ReadySignal onReady={() => { setBooted(true); onReady(); }} />
       </Canvas>
     </div>
   );

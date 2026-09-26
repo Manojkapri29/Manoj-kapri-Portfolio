@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import CityLoader from './components/CityLoader';
 import { CellCursor, CommandPalette } from './components/Extras';
-import Hero from './components/Hero';
+import Intro from './components/Intro';
 import Projects from './components/Projects';
 import { Contact, Education, Experience, Footer, KpiStrip, Skills } from './components/Sections';
 import { SheetTabs, TopBar } from './components/Shell';
@@ -30,8 +30,20 @@ export default function App() {
   const [cityAllowed] = useState(canUse3D);
   const [view, setView] = useState<View>(readView);
   const city = cityAllowed && view === 'city';
-  const [cityReady, setCityReady] = useState(false);
-  const onCityReady = useCallback(() => setCityReady(true), []);
+  const [stageReady, setStageReady] = useState(false);
+  const onStageReady = useCallback(() => setStageReady(true), []);
+  const noop = useCallback(() => {}, []);
+
+  // The intro covers the city at first, so boot the city a little later:
+  // a few seconds after the intro is up, or as soon as the visitor scrolls.
+  const [mountCity, setMountCity] = useState(false);
+  useEffect(() => {
+    if (!city || mountCity || !stageReady) return;
+    const t = window.setTimeout(() => setMountCity(true), 5000);
+    const onScroll = () => { if (window.scrollY > window.innerHeight * 0.6) setMountCity(true); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => { window.clearTimeout(t); window.removeEventListener('scroll', onScroll); };
+  }, [city, mountCity, stageReady]);
 
   const toggleView = useCallback(() => {
     setView((v) => {
@@ -47,10 +59,10 @@ export default function App() {
 
   // Never trap visitors behind the loader if WebGL is slow to start.
   useEffect(() => {
-    if (!city || cityReady) return;
-    const t = window.setTimeout(() => setCityReady(true), 8000);
+    if (stageReady) return;
+    const t = window.setTimeout(() => setStageReady(true), 6000);
     return () => window.clearTimeout(t);
-  }, [city, cityReady]);
+  }, [stageReady]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -68,18 +80,20 @@ export default function App() {
       <a href="#main" className="skip-link">Skip to content</a>
       {city ? (
         <>
-          <Suspense fallback={null}>
-            <DataCity onReady={onCityReady} />
-          </Suspense>
+          {mountCity && (
+            <Suspense fallback={null}>
+              <DataCity onReady={noop} />
+            </Suspense>
+          )}
           <div
             aria-hidden="true"
             className="pointer-events-none fixed inset-y-0 left-0 -z-[5] hidden w-[62%] bg-gradient-to-r from-bg/85 via-bg/55 to-transparent md:block"
           />
-          <CityLoader done={cityReady} />
         </>
       ) : (
         <CellCursor />
       )}
+      {city && <CityLoader done={stageReady} />}
       <TopBar
         active={active}
         theme={theme}
@@ -89,7 +103,7 @@ export default function App() {
         onToggleView={toggleView}
       />
       <main id="main">
-        <Hero showChart={!city} />
+        <Intro onReady={onStageReady} />
         <KpiStrip />
         <Skills />
         <Experience />
