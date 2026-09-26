@@ -315,9 +315,17 @@ export function Education() {
       <Reveal delay={0.1}>
         <ul className="mt-6 flex flex-wrap gap-2.5" aria-label="Certifications">
           {certifications.map((c) => (
-            <li key={c} className="inline-flex items-center gap-2 rounded-2xl border border-line bg-surface px-3 py-2 text-sm text-ink">
-              <Award className="size-4 text-teal" aria-hidden="true" />
-              {c}
+            <li key={c.credentialId} className="flex items-start gap-3 rounded-2xl border border-line bg-surface px-4 py-3 text-sm text-ink">
+              <Award className="mt-0.5 size-4 shrink-0 text-teal" aria-hidden="true" />
+              <div>
+                <p className="font-medium">{c.name}</p>
+                <p className="text-muted">
+                  {c.issuer} · Issued {c.issued}
+                </p>
+                <p className="mt-1 text-[12px] text-muted">
+                  Credential ID <span className="font-mono text-ink/80">{c.credentialId}</span>
+                </p>
+              </div>
             </li>
           ))}
         </ul>

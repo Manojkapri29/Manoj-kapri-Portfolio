@@ -259,10 +259,14 @@ export const education = [
   },
 ];
 
+/** Certificates — taken from Manoj's LinkedIn "Licenses & certifications". */
 export const certifications = [
-  'IBM Data Science Program — IIM Bombay & IBM',
-  'IBM Machine Learning',
-  'Data Analysis Certification — Unified Mentor',
+  {
+    name: 'Post Graduation Programme in Data Science and Artificial Intelligence',
+    issuer: 'Digicrome Academy',
+    issued: 'Dec 2025',
+    credentialId: 'DIGI369MJKN-140724-E8-SS-27',
+  },
 ];
 
 export const contact = {
