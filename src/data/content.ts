@@ -291,66 +291,76 @@ export const cityLandmarks = {
 };
 
 /**
- * PERSONAL INTRODUCTION — the opening story of the site (one screen per chapter).
- * `body` text is Manoj's own introduction, word for word. Edit freely.
- * `orb` controls the glowing orb for that chapter: position (x, y from -1 to 1),
- * size and colour. `align` places the text: 'top' | 'bottom' | 'left' | 'right' | 'center'.
+ * PERSONAL INTRODUCTION — told as a comic: "The Data Innings".
+ * `body` is Manoj's own introduction, word for word. Cricket headings, the
+ * sound effects (`sfx`) and scenes are just the storytelling layer — edit freely.
+ * `scene` picks the artwork: cover | stadium | scoreboard | wagonwheel | grounds | decision | nets | finale
  */
 export const intro = [
   {
     cell: 'A1',
-    kicker: 'Personal introduction',
-    title: "Hi, I'm Manoj Kapri.",
+    scene: 'cover',
+    kicker: 'Issue #1 · Delhi NCR',
+    title: 'The Data Innings',
+    bubble: "Hi, I'm Manoj Kapri.",
     body: "I have close to three years of experience across MIS reporting and data analysis, and I'm someone who genuinely enjoys working with data — whether it's cleaning it, analyzing it, or turning it into insights that drive real decisions.",
-    align: 'top',
-    orb: { x: 0, y: -0.92, scale: 0.95, color: '#3b5bff' },
+    sfx: '',
   },
   {
     cell: 'A2',
-    kicker: 'M3M India · MIS Executive',
-    title: 'Where it started.',
-    body: 'I started my career at M3M India as an MIS Executive, where I spent about two and a half years in the real estate sector managing large-scale reporting and dashboards.',
-    align: 'bottom',
-    orb: { x: 0, y: 0.3, scale: 0.95, color: '#7c5cff' },
+    scene: 'stadium',
+    kicker: 'The prologue',
+    title: 'Before the spreadsheets…',
+    // Manoj's cricket background — add detail here (team, level, years) if you like.
+    body: 'Before the spreadsheets, I was a professional cricketer.',
+    sfx: 'CRACK!',
   },
   {
     cell: 'A3',
-    kicker: 'AECOM India · Data Analyst',
-    title: 'Sharpening the analysis.',
-    body: 'From there, I moved to AECOM India as a Data Analyst, which strengthened my core analytical and reporting skills.',
-    align: 'left',
-    orb: { x: 0.42, y: 0.02, scale: 1.05, color: '#27e0ff' },
+    scene: 'scoreboard',
+    kicker: 'Innings 1 · M3M India · MIS Executive',
+    title: 'Opening the batting',
+    body: 'I started my career at M3M India as an MIS Executive, where I spent about two and a half years in the real estate sector managing large-scale reporting and dashboards.',
+    sfx: 'ON STRIKE!',
   },
   {
     cell: 'A4',
-    kicker: 'The LaLiT Suri Hospitality Group · MIS Executive',
-    title: 'Reporting at scale.',
-    body: 'Most recently, I worked as an MIS Executive at The Bharat Hotels Limited (The LaLiT Suri Hospitality Group), handling dashboards and reporting across 12+ properties pan-India within a Corporate L&D and MIS function.',
-    align: 'right',
-    orb: { x: -0.42, y: 0.02, scale: 1.05, color: '#c084fc' },
+    scene: 'wagonwheel',
+    kicker: 'Innings 2 · AECOM India · Data Analyst',
+    title: 'New ground',
+    body: 'From there, I moved to AECOM India as a Data Analyst, which strengthened my core analytical and reporting skills.',
+    sfx: 'SWITCH HIT!',
   },
   {
     cell: 'A5',
-    kicker: 'The next step',
-    title: 'Fully centered on data.',
-    body: "I moved on from that role because I wanted to focus more deeply on hands-on data analysis rather than L&D-related reporting, and I'm now looking to build a career fully centered around data.",
-    align: 'bottom',
-    orb: { x: 0, y: 0.32, scale: 0.75, color: '#ff4fd8' },
+    scene: 'grounds',
+    kicker: 'Innings 3 · The LaLiT Suri Hospitality Group',
+    title: '12 grounds, one scorecard',
+    body: 'Most recently, I worked as an MIS Executive at The Bharat Hotels Limited (The LaLiT Suri Hospitality Group), handling dashboards and reporting across 12+ properties pan-India within a Corporate L&D and MIS function.',
+    sfx: 'HOWZAT!',
   },
   {
     cell: 'A6',
-    kicker: 'Digicrome · Manipal University Jaipur',
-    title: 'Learning the science.',
-    body: 'Alongside my work experience, I did an online Data Science internship with Digicrome, which gave me practical exposure to Python, EDA, and machine learning. I also completed my MBA in Data Science and Analytics from Manipal University Jaipur with an 8.27 CGPA, which strengthened my foundation in Advanced Excel, Python, SQL, and Power BI.',
-    align: 'left',
-    orb: { x: 0.4, y: -0.02, scale: 1.15, color: '#4d7cff' },
+    scene: 'decision',
+    kicker: 'The review',
+    title: 'Choosing my format',
+    body: "I moved on from that role because I wanted to focus more deeply on hands-on data analysis rather than L&D-related reporting, and I'm now looking to build a career fully centered around data.",
+    sfx: 'DRS: DATA!',
   },
   {
     cell: 'A7',
+    scene: 'nets',
+    kicker: 'Nets practice · Digicrome · Manipal University Jaipur',
+    title: 'Practice makes the player',
+    body: 'Alongside my work experience, I did an online Data Science internship with Digicrome, which gave me practical exposure to Python, EDA, and machine learning. I also completed my MBA in Data Science and Analytics from Manipal University Jaipur with an 8.27 CGPA, which strengthened my foundation in Advanced Excel, Python, SQL, and Power BI.',
+    sfx: '8.27!',
+  },
+  {
+    cell: 'A8',
+    scene: 'finale',
     kicker: 'What I bring',
-    title: 'Business sense, meet data science.',
+    title: 'Ready for the next match',
     body: "What I bring is a mix of real business reporting experience and formal data science training, along with a genuine interest in solving problems through data — and I'm looking forward to applying that here.",
-    align: 'bottom',
-    orb: { x: 0, y: 0.34, scale: 1.1, color: '#7c9dff' },
+    sfx: 'GAME ON!',
   },
 ] as const;

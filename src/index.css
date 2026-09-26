@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
-@import "@fontsource/instrument-serif/latin-400.css";
+@import "@fontsource/bangers/latin-400.css";
+@import "@fontsource/comic-neue/latin-700.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -54,7 +55,8 @@
   --color-accent-soft: var(--accent-soft);
   --color-teal: var(--teal);
   --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-bangers: "Bangers", "Impact", sans-serif;
+  --font-comic: "Comic Neue", "Comic Sans MS", ui-rounded, sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -181,12 +183,32 @@ html.city [class*="bg-bg/"] {
   html.city #education .grid { grid-template-columns: 1fr; }
 }
 
-/* ── Personal introduction story ─────────────────────────────────────────── */
-.intro-body, #about h1, #about h2 { text-shadow: 0 2px 24px var(--bg), 0 0 2px var(--bg); }
-
-@keyframes orb-morph {
-  0%, 100% { border-radius: 48% 52% 55% 45% / 50% 45% 55% 50%; transform: rotate(0deg); }
-  33% { border-radius: 55% 45% 48% 52% / 45% 55% 50% 50%; }
-  66% { border-radius: 45% 55% 52% 48% / 55% 50% 45% 55%; transform: rotate(180deg); }
+/* ── Personal introduction: comic book ───────────────────────────────────── */
+.comic-bg {
+  background-color: #0a0f2c;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.06) 1.4px, transparent 1.6px),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59, 91, 255, 0.25), transparent 70%);
+  background-size: 14px 14px, 100% 100%;
 }
-.css-orb { filter: blur(2px); box-shadow: 0 0 120px 20px rgba(120, 140, 255, 0.25); animation: orb-morph 14s ease-in-out infinite; }
+.halftone {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1.3px, transparent 1.6px);
+  background-size: 9px 9px;
+}
+.comic-rays {
+  background: repeating-conic-gradient(from 0deg at 50% 45%, rgba(255, 204, 50, 0.22) 0deg 7deg, transparent 7deg 18deg);
+}
+/* Speech-bubble tail pointing down-left toward the cover */
+.speech::after {
+  content: "";
+  position: absolute;
+  left: 28px;
+  bottom: -26px;
+  width: 30px;
+  height: 26px;
+  background: #fff;
+  border-left: 4px solid #0b0c14;
+  border-bottom: 4px solid #0b0c14;
+  transform: skewX(-28deg);
+  transform-origin: top left;
+}

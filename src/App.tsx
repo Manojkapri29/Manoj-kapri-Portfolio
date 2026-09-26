@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import CityLoader from './components/CityLoader';
 import { CellCursor, CommandPalette } from './components/Extras';
-import Intro from './components/Intro';
+import ComicIntro from './components/ComicIntro';
 import Projects from './components/Projects';
 import { Contact, Education, Experience, Footer, KpiStrip, Skills } from './components/Sections';
 import { SheetTabs, TopBar } from './components/Shell';
@@ -103,7 +103,7 @@ export default function App() {
         onToggleView={toggleView}
       />
       <main id="main">
-        <Intro onReady={onStageReady} />
+        <ComicIntro onReady={onStageReady} />
         <KpiStrip />
         <Skills />
         <Experience />
