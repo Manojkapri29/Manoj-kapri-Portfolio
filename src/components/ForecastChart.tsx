@@ -26,7 +26,7 @@ export default function ForecastChart({ seed = 0 }: { seed?: number }) {
             labelStyle={{ color: 'var(--ink)' }}
           />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Line type="monotone" dataKey="Actual" stroke="#1f9d58" strokeWidth={2.5} dot={false} connectNulls={false} />
+          <Line type="monotone" dataKey="Actual" stroke="var(--accent-ink)" strokeWidth={2.5} dot={false} connectNulls={false} />
           <Line type="monotone" dataKey="Forecast" stroke="var(--teal)" strokeWidth={2} strokeDasharray="5 4" dot={false} />
         </LineChart>
       </ResponsiveContainer>

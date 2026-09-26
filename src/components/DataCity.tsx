@@ -62,26 +62,30 @@ type Palette = ReturnType<typeof palette>;
 const palette = (light: boolean) =>
   light
     ? {
-        bg: '#f4f6f3',
-        building: ['#dfe6e0', '#d5ddd7', '#e8ede9', '#cfd9d2'],
-        roof: ['#107c41', '#0b817c'],
-        cell: '#d2dad4',
-        section: '#aebcb2',
-        traffic: ['#107c41', '#0b817c'],
-        tower: '#138a49',
-        towerEmissive: '#0b5a2f',
-        line: '#08706b',
+        bg: '#f3f5fc',
+        building: ['#e2e7f5', '#d8def0', '#eaeef9', '#cfd6ee'],
+        roof: ['#4d6bff', '#9b5cff', '#0891b2'],
+        cell: '#d5dcef',
+        section: '#aab6dc',
+        traffic: ['#2f4fe0', '#8b5cf6'],
+        tower: '#3b5bff',
+        towerEmissive: '#2a3fd0',
+        line: '#8b5cf6',
+        particles: ['#4d6bff', '#8b5cf6', '#0891b2'],
+        additive: false,
       }
     : {
-        bg: '#0b0f0d',
-        building: ['#20342a', '#27402f', '#1c2e24', '#2e4a39'],
-        roof: ['#2fd07a', '#2cc2bc'],
-        cell: '#15201a',
-        section: '#1f3a2b',
-        traffic: ['#4cc47f', '#40d6cf'],
-        tower: '#138a49',
-        towerEmissive: '#0e6b38',
-        line: '#40d6cf',
+        bg: '#060a1a',
+        building: ['#141b3d', '#192250', '#10163a', '#1e2860'],
+        roof: ['#4d7cff', '#b35cff', '#27e0ff'],
+        cell: '#121a3c',
+        section: '#27358a',
+        traffic: ['#27e0ff', '#ff4fd8'],
+        tower: '#3d63ff',
+        towerEmissive: '#2b44e0',
+        line: '#ff4fd8',
+        particles: ['#7c9dff', '#c084fc', '#27e0ff'],
+        additive: true,
       };
 
 /* ── Generic skyline ─────────────────────────────────────────────────────── */
@@ -147,7 +151,7 @@ function Skyline({ pal }: { pal: Palette }) {
     roofList.forEach((b, i) => {
       m.makeScale(b.w * 1.02, 0.08, b.d * 1.02).setPosition(b.x, b.h, b.z);
       roofs.current!.setMatrixAt(i, m);
-      roofs.current!.setColorAt(i, c.set(pal.roof[i % 2]));
+      roofs.current!.setColorAt(i, c.set(pal.roof[i % pal.roof.length]));
     });
     roofs.current!.instanceMatrix.needsUpdate = true;
     if (roofs.current!.instanceColor) roofs.current!.instanceColor.needsUpdate = true;
@@ -212,6 +216,117 @@ function Traffic({ pal }: { pal: Palette }) {
   );
 }
 
+/* ── Floating data particles: glowing dots + drifting digits ─────────────── */
+
+const GLYPHS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '%', 'Σ', '+'];
+
+function glyphTexture(ch: string) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 64;
+  const g = c.getContext('2d')!;
+  g.fillStyle = '#fff';
+  g.font = '600 46px "JetBrains Mono Variable", "JetBrains Mono", monospace';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.fillText(ch, 32, 34);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+type Drifter = { x: number; y: number; z: number; speed: number; sway: number; phase: number };
+
+function makeDrifters(n: number, seed: number): Drifter[] {
+  const r = rng(seed);
+  return Array.from({ length: n }, () => ({
+    x: (r() - 0.5) * SIZE,
+    y: 0.3 + r() * 24,
+    z: (r() - 0.5) * SIZE,
+    speed: 0.25 + r() * 0.9,
+    sway: 0.2 + r() * 0.5,
+    phase: r() * Math.PI * 2,
+  }));
+}
+
+function DataParticles({ pal }: { pal: Palette }) {
+  const DOTS = 1100;
+  const PER_GLYPH = 34;
+  const dots = useMemo(() => makeDrifters(DOTS, 11), []);
+  const glyphs = useMemo(() => GLYPHS.map((ch, i) => ({ ch, tex: glyphTexture(ch), pts: makeDrifters(PER_GLYPH, 100 + i) })), []);
+  useEffect(() => () => glyphs.forEach((g) => g.tex.dispose()), [glyphs]);
+
+  const dotGeo = useMemo(() => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(DOTS * 3), 3));
+    g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(DOTS * 3), 3));
+    return g;
+  }, []);
+  const glyphGeos = useMemo(
+    () => glyphs.map(() => {
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(PER_GLYPH * 3), 3));
+      return g;
+    }),
+    [glyphs],
+  );
+
+  useLayoutEffect(() => {
+    const col = dotGeo.getAttribute('color') as THREE.BufferAttribute;
+    const c = new THREE.Color();
+    for (let i = 0; i < DOTS; i++) {
+      c.set(pal.particles[i % pal.particles.length]);
+      col.setXYZ(i, c.r, c.g, c.b);
+    }
+    col.needsUpdate = true;
+  }, [dotGeo, pal]);
+
+  useFrame((state, dt) => {
+    const step = Math.min(dt, 0.05);
+    const time = state.clock.elapsedTime;
+    const move = (d: Drifter) => {
+      d.y += d.speed * step;
+      if (d.y > 26) d.y = 0.3;
+    };
+    const pos = dotGeo.getAttribute('position') as THREE.BufferAttribute;
+    dots.forEach((d, i) => {
+      move(d);
+      pos.setXYZ(i, d.x + Math.sin(time * 0.6 + d.phase) * d.sway, d.y, d.z);
+    });
+    pos.needsUpdate = true;
+    glyphs.forEach((g, gi) => {
+      const gp = glyphGeos[gi].getAttribute('position') as THREE.BufferAttribute;
+      g.pts.forEach((d, i) => {
+        move(d);
+        gp.setXYZ(i, d.x + Math.sin(time * 0.5 + d.phase) * d.sway, d.y, d.z);
+      });
+      gp.needsUpdate = true;
+    });
+  });
+
+  return (
+    <group>
+      <points geometry={dotGeo} frustumCulled={false}>
+        <pointsMaterial size={0.17} sizeAttenuation vertexColors transparent opacity={0.95} depthWrite={false} blending={pal.additive ? THREE.AdditiveBlending : THREE.NormalBlending} toneMapped={false} />
+      </points>
+      {glyphs.map((g, i) => (
+        <points key={g.ch} geometry={glyphGeos[i]} frustumCulled={false}>
+          <pointsMaterial
+            map={g.tex}
+            size={1.05}
+            sizeAttenuation
+            color={pal.particles[i % pal.particles.length]}
+            transparent
+            opacity={0.9}
+            depthWrite={false}
+            blending={pal.additive ? THREE.AdditiveBlending : THREE.NormalBlending}
+            toneMapped={false}
+          />
+        </points>
+      ))}
+    </group>
+  );
+}
+
 /* ── Landmarks: one district per section ─────────────────────────────────── */
 
 function Tower({ x, z, h, label, sub, pal, active, delay }: {
@@ -228,7 +343,7 @@ function Tower({ x, z, h, label, sub, pal, active, delay }: {
     const e = 1 - Math.pow(1 - grow.current, 3);
     const breathe = 1 + Math.sin(state.clock.elapsedTime * 1.4 + x) * 0.015;
     if (mesh.current) mesh.current.scale.y = Math.max(0.02, h * e * breathe);
-    if (mat.current) mat.current.emissiveIntensity = THREE.MathUtils.lerp(mat.current.emissiveIntensity, active ? 0.9 : 0.3, 0.06);
+    if (mat.current) mat.current.emissiveIntensity = THREE.MathUtils.lerp(mat.current.emissiveIntensity, active ? 1.15 : 0.35, 0.06);
   });
 
   return (
@@ -386,7 +501,7 @@ export default function DataCity({ onReady }: { onReady: () => void }) {
         <color attach="background" args={[pal.bg]} />
         <fog attach="fog" args={[pal.bg, 28, light ? 95 : 88]} />
         <ambientLight intensity={light ? 1.05 : 0.5} />
-        <hemisphereLight args={[light ? '#ffffff' : '#9fd9c0', light ? '#c9d3cc' : '#07110c', light ? 0.6 : 0.45]} />
+        <hemisphereLight args={[light ? '#ffffff' : '#8fa4ff', light ? '#c9d0e6' : '#050818', light ? 0.6 : 0.5]} />
         <directionalLight position={[18, 30, 12]} intensity={light ? 1.2 : 0.9} />
 
         <Grid
@@ -404,6 +519,7 @@ export default function DataCity({ onReady }: { onReady: () => void }) {
         />
         <Skyline pal={pal} />
         <Traffic pal={pal} />
+        <DataParticles pal={pal} />
         {(['skills', 'experience', 'projects', 'education'] as const).map((id) => (
           <District key={id} id={id} pal={pal} active={active === id} />
         ))}

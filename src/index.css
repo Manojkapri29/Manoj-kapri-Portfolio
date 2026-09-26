@@ -7,36 +7,36 @@
 /* ── Theme tokens ─────────────────────────────────────────────────────────── */
 :root,
 .dark {
-  --bg: #0b0f0d;
-  --surface: #111714;
-  --surface-2: #17201b;
-  --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --grid: rgba(255, 255, 255, 0.035);
-  --ink: #e8edea;
-  --muted: #9aa59f;
-  --accent: #107c41;          /* Excel green — fills */
-  --accent-ink: #4cc47f;      /* green for text/lines on dark (AA) */
-  --accent-soft: rgba(16, 124, 65, 0.16);
-  --teal: #2cc2bc;
-  --focus: #4cc47f;
+  --bg: #060a1a;
+  --surface: #0d1330;
+  --surface-2: #141b40;
+  --line: rgba(150, 170, 255, 0.12);
+  --line-strong: rgba(150, 170, 255, 0.24);
+  --grid: rgba(120, 150, 255, 0.05);
+  --ink: #e6eaff;
+  --muted: #9aa3c7;
+  --accent: #3b5bff;          /* neon blue — fills */
+  --accent-ink: #7c9dff;      /* blue for text/lines on dark (AA) */
+  --accent-soft: rgba(80, 110, 255, 0.16);
+  --teal: #c084fc;            /* secondary accent (neon purple) */
+  --focus: #7c9dff;
   color-scheme: dark;
 }
 
 .light {
-  --bg: #fafaf7;
+  --bg: #f7f8fd;
   --surface: #ffffff;
-  --surface-2: #f1f4f0;
-  --line: rgba(16, 24, 20, 0.1);
-  --line-strong: rgba(16, 24, 20, 0.2);
-  --grid: rgba(16, 24, 20, 0.045);
-  --ink: #16201b;
-  --muted: #56615b;
-  --accent: #107c41;
-  --accent-ink: #0c6535;
-  --accent-soft: rgba(16, 124, 65, 0.1);
-  --teal: #0b817c;
-  --focus: #107c41;
+  --surface-2: #eef1fb;
+  --line: rgba(20, 30, 80, 0.1);
+  --line-strong: rgba(20, 30, 80, 0.2);
+  --grid: rgba(20, 30, 80, 0.045);
+  --ink: #121733;
+  --muted: #545b7a;
+  --accent: #2f4fe0;
+  --accent-ink: #2440c4;
+  --accent-soft: rgba(47, 79, 224, 0.1);
+  --teal: #7c3aed;
+  --focus: #2f4fe0;
   color-scheme: light;
 }
 
@@ -82,6 +82,9 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+
+/* Slide-in animations start off to the side; never let them widen the page. */
+#main { overflow-x: clip; }
 
 ::selection { background: var(--accent-soft); color: var(--accent-ink); }
 
@@ -145,12 +148,12 @@ html.city body { background-image: none; background-color: transparent; }
 
 /* Panels become frosted glass so the city shows through */
 html.city.dark, html.city:not(.light) {
-  --surface: rgba(14, 20, 17, 0.86);
-  --surface-2: rgba(28, 40, 33, 0.86);
+  --surface: rgba(10, 15, 40, 0.86);
+  --surface-2: rgba(20, 27, 64, 0.86);
 }
 html.city.light {
   --surface: rgba(255, 255, 255, 0.88);
-  --surface-2: rgba(241, 244, 240, 0.8);
+  --surface-2: rgba(238, 241, 251, 0.85);
 }
 html.city .bg-surface,
 html.city [class*="bg-surface/"],

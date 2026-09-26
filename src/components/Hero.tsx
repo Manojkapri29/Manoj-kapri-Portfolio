@@ -16,8 +16,8 @@ export function HeroFallback() {
     <svg viewBox={`0 0 ${w} ${h}`} className="h-full w-full" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
       <defs>
         <linearGradient id="fb-bar" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#1f9d58" />
-          <stop offset="1" stopColor="#107C41" stopOpacity="0.35" />
+          <stop offset="0" stopColor="var(--accent-ink)" />
+          <stop offset="1" stopColor="var(--accent)" stopOpacity="0.35" />
         </linearGradient>
       </defs>
       {Array.from({ length: 9 }).map((_, r) => (
