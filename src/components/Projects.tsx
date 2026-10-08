@@ -117,7 +117,8 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: 24, opacity: 0 }}
         transition={{ duration: 0.28, ease: [0.2, 0.8, 0.2, 1] }}
-        className="max-h-[92svh] w-full max-w-3xl overflow-y-auto rounded-t-lg border border-line-strong bg-bg shadow-2xl sm:rounded-lg"
+        data-lenis-prevent
+        className="max-h-[92svh] w-full max-w-3xl overflow-y-auto overscroll-contain rounded-t-lg border border-line-strong bg-bg shadow-2xl sm:rounded-lg"
       >
         {/* Title bar like a workbook window */}
         <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-line bg-surface px-5 py-3">

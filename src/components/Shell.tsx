@@ -119,7 +119,7 @@ export function SheetTabs({ active }: { active: SectionId }) {
   return (
     <nav
       aria-label="Sections"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/90 backdrop-blur-md"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md"
     >
       <div className="no-scrollbar mx-auto flex max-w-6xl items-stretch overflow-x-auto px-2 sm:px-4">
         <span className="hidden items-center pr-3 font-mono text-[11px] text-muted md:flex" aria-hidden="true">

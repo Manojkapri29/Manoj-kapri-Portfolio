@@ -29,7 +29,7 @@ function Beat({ i, show, children, className = '' }: { i: number; show: number; 
   const on = show === i;
   return (
     <div
-      className={`absolute inset-x-0 transition-all duration-700 ease-out ${on ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'} ${className}`}
+      className={`absolute inset-x-0 transition-[opacity,transform] duration-700 ease-out ${on ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'} ${className}`}
       aria-hidden={on ? undefined : true}
     >
       {children}

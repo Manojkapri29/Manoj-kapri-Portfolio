@@ -60,7 +60,6 @@
 
 /* ── Base ─────────────────────────────────────────────────────────────────── */
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 112px;
   -webkit-text-size-adjust: 100%;
 }
@@ -159,3 +158,24 @@ body {
   50% { transform: translate(8px, -18px); }
 }
 .dream-dusk { background: transparent; transition: background 0.4s; }
+
+/* ── Polish (Web Interface Guidelines) ───────────────────────────────────── */
+h1, h2, h3, blockquote { text-wrap: balance; }   /* no orphan words */
+p { text-wrap: pretty; }
+a, button, [role="tab"], [role="gridcell"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+/* Reading-progress hairline — native scroll-driven animation, zero JS */
+@supports (animation-timeline: scroll()) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 2px;
+    z-index: 50;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    transform-origin: 0 50%;
+    animation: read-progress linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes read-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}

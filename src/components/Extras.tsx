@@ -104,7 +104,7 @@ export function CommandPalette({ open, onClose, onToggleTheme, onToggleView }: {
               />
               <kbd className="rounded border border-line px-1.5 font-mono text-[10px] text-muted">Esc</kbd>
             </div>
-            <ul id="palette-list" role="listbox" className="max-h-[50vh] overflow-y-auto p-1.5">
+            <ul id="palette-list" role="listbox" data-lenis-prevent className="max-h-[50vh] overflow-y-auto overscroll-contain p-1.5">
               {filtered.length === 0 && <li className="px-3 py-6 text-center text-sm text-muted">No matches</li>}
               {filtered.map((c, i) => (
                 <li
