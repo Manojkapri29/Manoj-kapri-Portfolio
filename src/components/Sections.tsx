@@ -7,6 +7,7 @@ import {
   education,
   experience,
   formulaCells,
+  headings,
   kpis,
   profile,
   ranges,
@@ -168,7 +169,7 @@ export function Skills() {
 
   return (
     <section id="skills" aria-labelledby="skills-heading" className={`${wrap} py-14 md:py-20`}>
-      <SectionLabel id="skills" title="SKILLS" range={ranges.skills} />
+      <SectionLabel id="skills" title="SKILLS" range={ranges.skills} heading={headings.skills} />
       <Reveal>
         <div className="overflow-hidden rounded-2xl border border-line bg-surface md:grid md:grid-cols-[240px_minmax(0,1fr)]">
           <div
@@ -246,7 +247,7 @@ export function Experience() {
 
   return (
     <section id="experience" aria-labelledby="experience-heading" className={`${wrap} py-14 md:py-20`}>
-      <SectionLabel id="experience" title="EXPERIENCE" range={ranges.experience} />
+      <SectionLabel id="experience" title="EXPERIENCE" range={ranges.experience} heading={headings.experience} />
       <ol ref={ref} className="relative space-y-8 pl-8 md:pl-12">
         <span className="absolute bottom-2 left-[11px] top-2 w-px bg-line md:left-[19px]" aria-hidden="true" />
         <motion.span
@@ -263,7 +264,7 @@ export function Experience() {
               C{2 + i * 4}
             </span>
             <Reveal x={24} y={0}>
-              <article className="group relative rounded-2xl border border-white/70 bg-surface p-5 shadow-xl shadow-indigo-900/10 transition-colors hover:border-accent/50 md:p-6 dark:border-white/10">
+              <article className="glow group relative rounded-2xl border border-white/70 bg-surface p-5 shadow-xl shadow-indigo-900/10 transition-colors hover:border-accent/50 md:p-6 dark:border-white/10">
                                 <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
                   <div>
                     <h3 className="text-lg font-bold text-ink">{job.role}</h3>
@@ -296,11 +297,11 @@ export function Experience() {
 export function Education() {
   return (
     <section id="education" aria-labelledby="education-heading" className={`${wrap} py-14 md:py-20`}>
-      <SectionLabel id="education" title="EDUCATION & CERTIFICATIONS" range={ranges.education} />
+      <SectionLabel id="education" title="EDUCATION" range={ranges.education} heading={headings.education} />
       <div className="grid gap-4 md:grid-cols-3">
         {education.map((e, i) => (
           <Reveal key={e.degree} delay={i * 0.06}>
-            <article className="h-full rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-accent/60">
+            <article className="glow h-full rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-accent/60">
               <GraduationCap className="size-6 text-accent-ink" aria-hidden="true" />
               <h3 className="mt-3 font-bold text-ink">{e.degree}</h3>
               <p className="text-sm text-muted">{e.school}</p>

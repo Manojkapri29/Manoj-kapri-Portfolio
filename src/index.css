@@ -179,3 +179,33 @@ a, button, [role="tab"], [role="gridcell"] { touch-action: manipulation; -webkit
   }
   @keyframes read-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 }
+
+/* ── Premium section touches ─────────────────────────────────────────────── */
+/* Cursor spotlight on cards (position set by one pointermove listener in App) */
+.glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 60%);
+}
+@media (hover: hover) { .glow:hover::before { opacity: 1; } }
+
+/* Quote fills in as it scrolls into view — native, no JS */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-text {
+      color: transparent;
+      background: linear-gradient(90deg, var(--ink) 50%, color-mix(in srgb, var(--ink) 22%, transparent) 50%) 100% 0 / 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: text-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 55%;
+    }
+    @keyframes text-fill { to { background-position: 0 0; } }
+  }
+}

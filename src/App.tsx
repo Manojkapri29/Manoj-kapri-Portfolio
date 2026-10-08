@@ -31,6 +31,19 @@ export default function App() {
     return () => { gsap.ticker.remove(tick); lenis.destroy(); delete (window as Window & { __lenis?: Lenis }).__lenis; };
   }, []);
 
+  // Cursor spotlight on .glow cards: one listener, CSS does the rest.
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      const el = (e.target as Element).closest?.<HTMLElement>('.glow');
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
+  }, []);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {

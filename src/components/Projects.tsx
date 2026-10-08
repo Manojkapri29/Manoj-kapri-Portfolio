@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { ArrowUpRight, ExternalLink, X } from 'lucide-react';
-import { isPlaceholder, projects, ranges, type Project } from '../data/content';
+import { headings, isPlaceholder, projects, ranges, type Project } from '../data/content';
 import { useMediaQuery } from '../hooks/useSite';
 import { GithubIcon } from './icons';
 import { Reveal } from './Reveal';
@@ -33,7 +33,7 @@ function TiltCard({ project, index, onOpen }: { project: Project; index: number;
       }}
       onPointerLeave={() => { mx.set(0.5); my.set(0.5); }}
       style={tilt ? { rotateX: rx, rotateY: ry, transformPerspective: 900 } : undefined}
-      className="group relative flex h-full w-full cursor-pointer flex-col rounded-2xl border border-line bg-surface p-6 text-left transition-colors hover:border-accent has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-offset-2 has-[button:focus-visible]:outline-[var(--focus)]"
+      className="glow group relative flex h-full w-full cursor-pointer flex-col rounded-2xl border border-line bg-surface p-6 text-left transition-colors hover:border-accent has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-offset-2 has-[button:focus-visible]:outline-[var(--focus)]"
     >
       <span className="absolute right-3 top-2 text-[10px] text-muted" aria-hidden="true">D{index + 2}</span>
       <div className="flex flex-wrap gap-1.5">
@@ -157,7 +157,17 @@ function ProjectModal({ project, seed, onClose }: { project: Project; seed: numb
           </ul>
           )}
 
-          {project.chart && (
+          {project.image && (
+            <figure className="rounded-md border border-line bg-surface p-4">
+              <figcaption className="mb-3 flex items-center justify-between gap-3">
+                <span className="text-sm font-semibold text-ink">{project.image.caption}</span>
+                <span className="shrink-0 rounded border border-line px-1.5 py-0.5 text-[10.5px] uppercase tracking-wider text-muted">From my notebook</span>
+              </figcaption>
+              <img src={project.image.src} alt={project.image.alt} width={project.image.w} height={project.image.h} loading="lazy" className="h-auto w-full rounded bg-white" />
+            </figure>
+          )}
+
+          {project.chart && !project.image && (
           <div className="rounded-md border border-line bg-surface p-4">
             <div className="mb-2 flex items-center justify-between">
               <p className="text-sm font-semibold text-ink">Actual vs Forecast</p>
@@ -205,7 +215,7 @@ export default function Projects() {
 
   return (
     <section id="projects" aria-labelledby="projects-heading" className="mx-auto max-w-6xl px-4 py-14 md:py-20">
-      <SectionLabel id="projects" title="PROJECTS" range={ranges.projects} />
+      <SectionLabel id="projects" title="PROJECTS" range={ranges.projects} heading={headings.projects} />
       <ul className="grid gap-5 md:grid-cols-2">
         {projects.map((p, i) => (
           <li key={p.name}>

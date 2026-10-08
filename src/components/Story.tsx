@@ -38,7 +38,7 @@ export default function Story() {
       </div>
 
       <Reveal>
-        <blockquote className="mx-auto mt-20 max-w-4xl text-center text-2xl font-light leading-snug tracking-[-0.02em] text-ink sm:text-3xl md:text-4xl">
+        <blockquote className="reveal-text mx-auto mt-20 max-w-4xl text-center text-2xl font-light leading-snug tracking-[-0.02em] text-ink sm:text-3xl md:text-4xl">
           <span className="text-accent-ink">“</span>
           {story.bring}
           <span className="text-accent-ink">”</span>

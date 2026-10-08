@@ -154,15 +154,17 @@ export function SheetTabs({ active }: { active: SectionId }) {
 }
 
 /** Section heading styled as a cell range label, e.g. "SKILLS B2:B5". */
-export function SectionLabel({ id, title, range }: { id: string; title: string; range: string }) {
+export function SectionLabel({ id, title, range, heading }: { id: string; title: string; range: string; heading: string }) {
   return (
-    <div className="mb-8 flex items-baseline gap-3">
-      
-      <h2 id={`${id}-heading`} className="text-[13px] font-semibold uppercase tracking-[0.28em] text-ink outline-none">
-        {title}
+    <div className="mb-10">
+      <div className="flex items-baseline gap-3">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent-ink">{title}</p>
+        <span className="font-mono text-xs text-muted" aria-label={`cell range ${range}`}>{range}</span>
+        <span className="h-px flex-1 bg-line" aria-hidden="true" />
+      </div>
+      <h2 id={`${id}-heading`} className="mt-4 text-4xl font-light tracking-[-0.03em] text-ink outline-none sm:text-5xl">
+        {heading}
       </h2>
-      <span className="font-mono text-xs text-muted" aria-label={`cell range ${range}`}>{range}</span>
-      <span className="h-px flex-1 bg-line" aria-hidden="true" />
     </div>
   );
 }

@@ -55,6 +55,14 @@ export const ranges = {
   education: 'E2:E6',
 };
 
+/** Big section headings (edit freely). */
+export const headings = {
+  skills: 'The toolkit.',
+  experience: 'Where I\u2019ve worked.',
+  projects: 'Selected work.',
+  education: 'Education & certifications.',
+};
+
 export const kpis = [
   { value: 3, decimals: 0, suffix: '+', label: 'Years Experience', cell: 'A3' },
   { value: 12, decimals: 0, suffix: '', label: 'Properties Reported', cell: 'B3' },
@@ -195,6 +203,8 @@ export type Project = {
   metrics: { label: string; value: string }[];
   /** Show the illustrative Actual-vs-Forecast chart (labelled "Sample data"). */
   chart?: boolean;
+  /** A real output chart from the project notebook (shown instead of the sample chart). */
+  image?: { src: string; alt: string; caption: string; w: number; h: number };
   github: string;
   demo: string;
 };
@@ -211,7 +221,7 @@ export const projects: Project[] = [
       { label: 'Daily sales records', value: '1,017,209' },
       { label: 'Records after cleaning', value: '715,912' },
     ],
-    chart: true,
+    image: { src: '/work/rossmann-monthly-sales.webp', alt: 'Line chart of monthly average sales: about 6,200 in January, dipping near 6,100 in September, rising to about 7,400 in December', caption: 'Monthly average sales', w: 584, h: 455 },
     github: 'https://github.com/Manojkapri29/Nexthikes-Project-6',
     demo: '{{DEMO_URL_PROJECT_1}}',
   },
@@ -240,6 +250,7 @@ export const projects: Project[] = [
       { label: 'Labelled training reviews', value: '4,000' },
       { label: 'Test reviews', value: '1,000' },
     ],
+    image: { src: '/work/sentiment-review-length.webp', alt: 'Box plot of review length by sentiment: negative reviews are longer than positive and neutral ones', caption: 'Review length by sentiment', w: 783, h: 468 },
     github: 'https://github.com/Manojkapri29/Digicrome-Final-Capstone-Project',
     demo: '{{DEMO_URL_PROJECT_3}}',
   },
